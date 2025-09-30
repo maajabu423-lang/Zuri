@@ -1,4 +1,4 @@
-🔥 AEGIS-X: Ultimate Autonomous Bug Bounty System
+ AEGIS-X: Ultimate Autonomous Bug Bounty System
 
 **The First Truly Self-Aware, Adaptive, and Evolving Bug Bounty Agent**
 
