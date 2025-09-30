@@ -85,16 +85,29 @@ class AegisXUltimateMaster:
         logger.info(f"🎯 Success Criteria: {self.success_criteria}")
         logger.info("💀 GUARANTEED TO FIND CRITICAL VULNERABILITIES")
 
-    async def ultimate_hunting_campaign(self, target: str, max_iterations: int = 5) -> Dict[str, Any]:
+    async def ultimate_hunting_campaign(self, target: str, max_iterations: int = 5, 
+                                      parallel_agents: bool = False, fast_mode: bool = False, 
+                                      time_limit: int = 45) -> Dict[str, Any]:
         """
         Execute the ultimate hunting campaign with guaranteed results
         """
         logger.info("🚀" * 20)
         logger.info(f"🎯 STARTING ULTIMATE HUNTING CAMPAIGN AGAINST: {target}")
+        if parallel_agents:
+            logger.info("⚡ PARALLEL AI AGENTS ENABLED")
+        if fast_mode:
+            logger.info(f"🏃 FAST MODE ENABLED - {time_limit} minute time limit")
         logger.info("🚀" * 20)
         
         campaign_start = time.time()
         iteration = 0
+        
+        # Set time limit for fast mode
+        if fast_mode:
+            end_time = campaign_start + (time_limit * 60)  # Convert minutes to seconds
+            logger.info(f"⏰ Campaign will complete by: {datetime.fromtimestamp(end_time)}")
+        else:
+            end_time = None
         
         # Phase 1: Tool Installation and Setup
         logger.info("🔧 PHASE 1: ADVANCED TOOL INSTALLATION")
@@ -104,14 +117,25 @@ class AegisXUltimateMaster:
         logger.info("🔍 PHASE 2: ITERATIVE DEEP HUNTING")
         
         while iteration < max_iterations:
+            # Check time limit for fast mode
+            if fast_mode and end_time and time.time() > end_time:
+                logger.info(f"⏰ Time limit reached ({time_limit} minutes), completing hunt...")
+                break
+                
             iteration += 1
             
             logger.info("=" * 80)
             logger.info(f"🔄 ITERATION {iteration}/{max_iterations}")
+            if fast_mode:
+                remaining_time = int((end_time - time.time()) / 60) if end_time else 0
+                logger.info(f"⏰ Time remaining: {remaining_time} minutes")
             logger.info("=" * 80)
             
-            # Execute comprehensive hunting iteration
-            iteration_results = await self._execute_hunting_iteration(target, iteration)
+            # Execute comprehensive hunting iteration (with parallel processing if enabled)
+            if parallel_agents:
+                iteration_results = await self._execute_parallel_hunting_iteration(target, iteration, fast_mode)
+            else:
+                iteration_results = await self._execute_hunting_iteration(target, iteration)
             
             # Analyze and track progress
             progress = self._analyze_campaign_progress()
@@ -313,6 +337,141 @@ class AegisXUltimateMaster:
             logger.error(f"❌ Error in hunting iteration {iteration}: {str(e)}")
         
         return iteration_results
+
+    async def _execute_parallel_hunting_iteration(self, target: str, iteration: int, fast_mode: bool = False) -> Dict[str, Any]:
+        """Execute a parallel hunting iteration with AI agents working simultaneously"""
+        logger.info(f"⚡ Executing PARALLEL hunting iteration {iteration} against {target}")
+        
+        iteration_results = {
+            'iteration': iteration,
+            'target': target,
+            'start_time': datetime.now().isoformat(),
+            'vulnerabilities': [],
+            'evidence': [],
+            'reconnaissance': {},
+            'statistics': {},
+            'parallel_mode': True
+        }
+        
+        try:
+            # Create parallel tasks for different hunting phases
+            tasks = []
+            
+            # Task 1: Advanced Reconnaissance (Agent 1)
+            logger.info("🤖 Agent 1: Starting Advanced Reconnaissance")
+            recon_task = asyncio.create_task(self.professional_hunter.advanced_reconnaissance(target))
+            tasks.append(('reconnaissance', recon_task))
+            
+            # Task 2: Web Application Testing (Agent 2) 
+            logger.info("🤖 Agent 2: Starting Web Application Testing")
+            webapp_task = asyncio.create_task(self._parallel_webapp_testing(target, fast_mode))
+            tasks.append(('webapp', webapp_task))
+            
+            # Task 3: API Security Testing (Agent 3)
+            logger.info("🤖 Agent 3: Starting API Security Testing")
+            api_task = asyncio.create_task(self._parallel_api_testing(target, fast_mode))
+            tasks.append(('api', api_task))
+            
+            # Task 4: Network Security Testing (Agent 4)
+            logger.info("🤖 Agent 4: Starting Network Security Testing")
+            network_task = asyncio.create_task(self._parallel_network_testing(target, fast_mode))
+            tasks.append(('network', network_task))
+            
+            # Execute all tasks in parallel
+            logger.info("⚡ Executing 4 AI agents in parallel...")
+            results = {}
+            
+            for task_name, task in tasks:
+                try:
+                    if fast_mode:
+                        # Shorter timeout for fast mode
+                        result = await asyncio.wait_for(task, timeout=300)  # 5 minutes per agent
+                    else:
+                        result = await asyncio.wait_for(task, timeout=900)  # 15 minutes per agent
+                    results[task_name] = result
+                    logger.info(f"✅ Agent {task_name} completed successfully")
+                except asyncio.TimeoutError:
+                    logger.warning(f"⏰ Agent {task_name} timed out")
+                    results[task_name] = {}
+                except Exception as e:
+                    logger.error(f"❌ Agent {task_name} failed: {str(e)}")
+                    results[task_name] = {}
+            
+            # Combine results from all agents
+            iteration_results['reconnaissance'] = results.get('reconnaissance', {})
+            
+            # Collect vulnerabilities from all agents
+            all_vulnerabilities = []
+            for agent_result in results.values():
+                if isinstance(agent_result, dict) and 'vulnerabilities' in agent_result:
+                    all_vulnerabilities.extend(agent_result['vulnerabilities'])
+                elif isinstance(agent_result, list):
+                    all_vulnerabilities.extend(agent_result)
+            
+            iteration_results['vulnerabilities'] = all_vulnerabilities
+            
+            # Log parallel execution results
+            logger.info(f"⚡ PARALLEL EXECUTION COMPLETE:")
+            logger.info(f"   🤖 Agents completed: {len([r for r in results.values() if r])}")
+            logger.info(f"   🎯 Total vulnerabilities found: {len(all_vulnerabilities)}")
+            
+            # Add vulnerabilities to tracking
+            for vuln in all_vulnerabilities:
+                if isinstance(vuln, AdvancedVulnerability):
+                    self.total_vulnerabilities.append(vuln)
+                elif isinstance(vuln, dict):
+                    # Convert dict to AdvancedVulnerability
+                    adv_vuln = AdvancedVulnerability(
+                        title=vuln.get('title', 'Unknown'),
+                        severity=vuln.get('severity', 'Medium'),
+                        description=vuln.get('description', ''),
+                        url=vuln.get('url', target),
+                        payload=vuln.get('payload', ''),
+                        evidence=vuln.get('evidence', [])
+                    )
+                    self.total_vulnerabilities.append(adv_vuln)
+            
+            # Collect evidence from parallel execution
+            logger.info("📸 Collecting evidence from parallel agents...")
+            evidence_items = await self.evidence_collector.collect_comprehensive_evidence(
+                target, all_vulnerabilities
+            )
+            iteration_results['evidence'] = evidence_items
+            self.total_evidence.extend(evidence_items)
+            
+            logger.info(f"   📸 Evidence items collected: {len(evidence_items)}")
+            
+        except Exception as e:
+            logger.error(f"❌ Error in parallel hunting iteration {iteration}: {str(e)}")
+        
+        return iteration_results
+    
+    async def _parallel_webapp_testing(self, target: str, fast_mode: bool = False) -> Dict[str, Any]:
+        """Parallel web application testing agent"""
+        try:
+            vulnerabilities = await self.professional_hunter.advanced_web_application_testing(target)
+            return {'vulnerabilities': vulnerabilities, 'agent': 'webapp'}
+        except Exception as e:
+            logger.error(f"❌ Web app testing agent failed: {str(e)}")
+            return {'vulnerabilities': [], 'agent': 'webapp'}
+    
+    async def _parallel_api_testing(self, target: str, fast_mode: bool = False) -> Dict[str, Any]:
+        """Parallel API security testing agent"""
+        try:
+            vulnerabilities = await self.professional_hunter.advanced_api_security_testing(target)
+            return {'vulnerabilities': vulnerabilities, 'agent': 'api'}
+        except Exception as e:
+            logger.error(f"❌ API testing agent failed: {str(e)}")
+            return {'vulnerabilities': [], 'agent': 'api'}
+    
+    async def _parallel_network_testing(self, target: str, fast_mode: bool = False) -> Dict[str, Any]:
+        """Parallel network security testing agent"""
+        try:
+            vulnerabilities = await self.professional_hunter.advanced_network_testing(target)
+            return {'vulnerabilities': vulnerabilities, 'agent': 'network'}
+        except Exception as e:
+            logger.error(f"❌ Network testing agent failed: {str(e)}")
+            return {'vulnerabilities': [], 'agent': 'network'}
 
     def _analyze_campaign_progress(self) -> Dict[str, Any]:
         """Analyze current campaign progress"""
@@ -773,6 +932,9 @@ async def main():
     parser.add_argument('--target', required=True, help='Target domain to hunt')
     parser.add_argument('--iterations', type=int, default=5, help='Maximum hunting iterations')
     parser.add_argument('--output-dir', default='output', help='Output directory for reports')
+    parser.add_argument('--parallel-agents', action='store_true', help='Enable parallel AI agent processing')
+    parser.add_argument('--fast-mode', action='store_true', help='Enable fast mode for 18-60 minute execution')
+    parser.add_argument('--time-limit', type=int, default=45, help='Time limit in minutes for fast mode')
     
     args = parser.parse_args()
     
@@ -784,7 +946,13 @@ async def main():
     
     try:
         # Execute ultimate hunting campaign
-        final_report = await aegis_x.ultimate_hunting_campaign(args.target, args.iterations)
+        final_report = await aegis_x.ultimate_hunting_campaign(
+            args.target, 
+            args.iterations, 
+            args.parallel_agents, 
+            args.fast_mode, 
+            args.time_limit
+        )
         
         # Print final summary
         print("\n" + "🏆" * 50)
