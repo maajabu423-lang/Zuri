@@ -235,7 +235,7 @@ jobs:
           
     - name: 📤 Upload Hunt Results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: aegis-x-hunt-results-${{ env.TARGET }}
         path: |
@@ -248,7 +248,7 @@ jobs:
         
     - name: 📤 Upload Detailed Reports
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: aegis-x-detailed-reports-${{ env.TARGET }}
         path: |
@@ -259,7 +259,7 @@ jobs:
         
     - name: 📤 Upload Evidence Files
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: aegis-x-evidence-${{ env.TARGET }}
         path: |
