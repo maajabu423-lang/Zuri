@@ -85,6 +85,14 @@ class HeadlessEvidenceCollector:
         for dir_path in [self.screenshots_dir, self.videos_dir, self.network_dir, 
                         self.logs_dir, self.payloads_dir, self.reports_dir]:
             dir_path.mkdir(parents=True, exist_ok=True)
+            
+            # Create initial placeholder file to ensure directory is not empty
+            placeholder_file = dir_path / ".evidence_collector_initialized"
+            if not placeholder_file.exists():
+                with open(placeholder_file, 'w') as f:
+                    f.write(f"Evidence collector initialized at {datetime.now().isoformat()}\n")
+                    f.write(f"Directory: {dir_path}\n")
+                    f.write("This file ensures the directory is not empty for CI/CD artifact uploads.\n")
         
         # Evidence tracking
         self.evidence_items: List[EvidenceItem] = []

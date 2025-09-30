@@ -194,8 +194,19 @@ jobs:
         
         # Create required directories to ensure they exist
         echo "📁 Creating required directories..."
-        mkdir -p output/{reports,campaigns} evidence/{screenshots,network,payloads,reports} logs
-        echo "✅ Directories created successfully"
+        mkdir -p output/{reports,campaigns} evidence/{screenshots,videos,network,logs,payloads,reports} logs
+        
+        # Create placeholder files immediately to ensure directories are not empty
+        echo "📝 Creating placeholder files to prevent upload failures..."
+        echo "Hunt started at $(date)" > evidence/screenshots/.hunt_started
+        echo "Hunt started at $(date)" > evidence/network/.hunt_started  
+        echo "Hunt started at $(date)" > evidence/payloads/.hunt_started
+        echo "Hunt started at $(date)" > evidence/reports/.hunt_started
+        echo "Hunt started at $(date)" > output/reports/.hunt_started
+        echo "Hunt started at $(date)" > output/campaigns/.hunt_started
+        echo "Hunt started at $(date)" > logs/.hunt_started
+        
+        echo "✅ Directories and placeholder files created successfully"
         
         # Run the ultimate hunting system
         python3 aegis_x_ultimate_master.py \
@@ -248,19 +259,47 @@ jobs:
         echo "📁 Preparing directories for artifact upload..."
         
         # Ensure all required directories exist
-        mkdir -p output/{reports,campaigns} evidence/{screenshots,network,payloads,reports} logs
+        mkdir -p output/{reports,campaigns} evidence/{screenshots,videos,network,logs,payloads,reports} logs
         
         # Create placeholder files in empty directories to ensure upload works
         for dir in output/reports output/campaigns evidence/screenshots evidence/network evidence/payloads evidence/reports logs; do
-          if [ -d "$dir" ] && [ -z "$(ls -A "$dir" 2>/dev/null)" ]; then
-            echo "No files found in $dir during hunt execution" > "$dir/.placeholder"
-            echo "📝 Created placeholder in empty directory: $dir"
+          if [ -d "$dir" ]; then
+            # Count actual files (excluding hidden placeholder files)
+            file_count=$(find "$dir" -type f ! -name ".*" 2>/dev/null | wc -l)
+            if [ "$file_count" -eq 0 ]; then
+              echo "No evidence files found in $dir during hunt execution" > "$dir/.no_evidence_found"
+              echo "Target: $TARGET" >> "$dir/.no_evidence_found"
+              echo "Hunt completed at: $(date)" >> "$dir/.no_evidence_found"
+              echo "📝 Created placeholder in empty directory: $dir"
+            else
+              echo "✅ Found $file_count files in $dir"
+            fi
+          else
+            echo "⚠️ Directory $dir does not exist, creating it..."
+            mkdir -p "$dir"
+            echo "No evidence files found in $dir - directory was missing" > "$dir/.directory_missing"
           fi
         done
         
         # List what we have for debugging
         echo "📊 Directory contents summary:"
-        find output evidence logs -type f 2>/dev/null | wc -l | xargs echo "Total files found:"
+        echo "📁 Output directory:"
+        find output -type f 2>/dev/null | wc -l | xargs echo "  Files in output/:"
+        echo "📁 Evidence directory:"
+        find evidence -type f 2>/dev/null | wc -l | xargs echo "  Files in evidence/:"
+        echo "📁 Logs directory:"
+        find logs -type f 2>/dev/null | wc -l | xargs echo "  Files in logs/:"
+        
+        # Show specific directories that will be uploaded
+        echo "📤 Directories to be uploaded:"
+        for dir in evidence/screenshots evidence/network evidence/payloads; do
+          if [ -d "$dir" ]; then
+            file_count=$(find "$dir" -type f 2>/dev/null | wc -l)
+            echo "  $dir: $file_count files"
+          else
+            echo "  $dir: MISSING"
+          fi
+        done
         
         echo "✅ Directories prepared for upload"
 
