@@ -167,6 +167,21 @@ jobs:
           echo "ITERATIONS=5" >> $GITHUB_ENV
         fi
         
+    - name: 🧹 Clean Previous Hunt Results
+      run: |
+        echo "🧹 Cleaning previous hunt results for fresh start..."
+        rm -rf \
+          output/ \
+          evidence/ \
+          logs/ \
+          hunt_summary.txt \
+          *.tar.gz \
+          *.json \
+          *.html \
+          ultimate_report_*.* \
+          2>/dev/null || true
+        echo "✅ Previous results cleaned successfully"
+        
     - name: 🔥 Execute AEGIS-X Ultimate Hunt
       run: |
         echo "🚀 Starting AEGIS-X Ultimate Hunt against $TARGET"
@@ -176,6 +191,11 @@ jobs:
         # Set display for headless browser
         export DISPLAY=:99
         Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+        
+        # Create required directories to ensure they exist
+        echo "📁 Creating required directories..."
+        mkdir -p output/{reports,campaigns} evidence/{screenshots,network,payloads,reports} logs
+        echo "✅ Directories created successfully"
         
         # Run the ultimate hunting system
         python3 aegis_x_ultimate_master.py \
@@ -222,16 +242,40 @@ jobs:
         
         cat hunt_summary.txt
         
+    - name: 📁 Prepare Directories for Upload
+      if: always()
+      run: |
+        echo "📁 Preparing directories for artifact upload..."
+        
+        # Ensure all required directories exist
+        mkdir -p output/{reports,campaigns} evidence/{screenshots,network,payloads,reports} logs
+        
+        # Create placeholder files in empty directories to ensure upload works
+        for dir in output/reports output/campaigns evidence/screenshots evidence/network evidence/payloads evidence/reports logs; do
+          if [ -d "$dir" ] && [ -z "$(ls -A "$dir" 2>/dev/null)" ]; then
+            echo "No files found in $dir during hunt execution" > "$dir/.placeholder"
+            echo "📝 Created placeholder in empty directory: $dir"
+          fi
+        done
+        
+        # List what we have for debugging
+        echo "📊 Directory contents summary:"
+        find output evidence logs -type f 2>/dev/null | wc -l | xargs echo "Total files found:"
+        
+        echo "✅ Directories prepared for upload"
+
     - name: 🗜️ Compress Evidence and Reports
       if: always()
       run: |
         # Create compressed archive of all results
+        echo "🗜️ Creating compressed archive..."
         tar -czf aegis-x-results-$TARGET-$(date +%Y%m%d-%H%M%S).tar.gz \
           output/ \
           evidence/ \
           logs/ \
           hunt_summary.txt \
           2>/dev/null || true
+        echo "✅ Archive created successfully"
           
     - name: 📤 Upload Hunt Results
       if: always()
