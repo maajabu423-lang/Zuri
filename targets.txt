@@ -1,6 +1,13 @@
-# AEGIS-X Target Configuration
+# AEGIS-X Ultimate Target Configuration
 # Supports multiple target types: WEB, MOBILE, FILE, NETWORK, CODE
 
-# Real Test Targets (as specified)
-app.aikido.dev
-*.aikido.dev
+# Primary Target for Ultimate Hunt
+youngplatform.com
+
+# Additional Scope (if needed)
+*.youngplatform.com
+api.youngplatform.com
+app.youngplatform.com
+admin.youngplatform.com
+staging.youngplatform.com
+dev.youngplatform.com
