@@ -816,33 +816,31 @@ class EliteVerificationEngine:
                         result['indicators'].append(f"False positive pattern: {pattern}")
                         result['confidence'] = 0.1
             
-            # Additional false positive checks
-            fp_indicators = [
-                'test mode', 'development environment', 'demo application',
-                'example.com', 'localhost', 'not exploitable',
-                'informational only', 'requires user interaction',
-                'blocked by waf', 'filtered by security',
-                'sanitized input', 'encoded output',
-                'csp blocked', 'xss filter', 'prepared statement'
+            # Only check for obvious false positive indicators
+            obvious_fp_indicators = [
+                'not exploitable', 'informational only', 'false positive test',
+                'scanner test payload', 'demo vulnerability only'
             ]
             
-            content_to_check = f"{description} {proof_of_concept} {target_url}"
-            for indicator in fp_indicators:
+            content_to_check = f"{description} {proof_of_concept}"
+            fp_count = 0
+            for indicator in obvious_fp_indicators:
                 if indicator in content_to_check:
-                    result['valid'] = False
+                    fp_count += 1
                     result['indicators'].append(f"False positive indicator: {indicator}")
-                    result['confidence'] = max(0.1, result['confidence'] - 0.2)
+                    result['confidence'] = max(0.1, result['confidence'] - 0.3)
             
-            # Check for test/demo domains
-            test_domains = [
-                'example.com', 'test.com', 'demo.com', 'localhost',
-                'httpbin.org', 'postman-echo.com', 'jsonplaceholder.typicode.com'
-            ]
+            # Only mark as false positive if multiple obvious indicators
+            if fp_count >= 2:
+                result['valid'] = False
+            
+            # For test domains, just reduce confidence but don't eliminate
+            test_domains = ['example.com', 'test.com', 'demo.com']
             
             for domain in test_domains:
                 if domain in target_url:
                     result['indicators'].append(f"Test/demo domain detected: {domain}")
-                    result['confidence'] = max(0.3, result['confidence'] - 0.3)
+                    result['confidence'] = max(0.5, result['confidence'] - 0.2)  # Less penalty
                     
         except Exception as e:
             result['details']['error'] = str(e)

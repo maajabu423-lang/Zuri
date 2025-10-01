@@ -7,6 +7,7 @@ A simple Flask application with intentional vulnerabilities for testing AEGIS-X
 from flask import Flask, request, render_template_string, jsonify
 import sqlite3
 import os
+import argparse
 
 app = Flask(__name__)
 
@@ -188,5 +189,10 @@ def api_user(user_id):
         return jsonify({'error': 'User not found'}), 404
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Vulnerable Test Application')
+    parser.add_argument('--host', default='0.0.0.0', help='Host to bind to')
+    parser.add_argument('--port', type=int, default=12001, help='Port to bind to')
+    args = parser.parse_args()
+    
     init_db()
-    app.run(host='0.0.0.0', port=12001, debug=True)
+    app.run(host=args.host, port=args.port, debug=True)
