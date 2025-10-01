@@ -133,7 +133,7 @@ install_web_tools() {
     
     # Subdomain enumeration
     go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-    go install github.com/OWASP/Amass/v3/...@master
+    go install github.com/owasp-amass/amass/v3/...@latest
     pip3 install sublist3r
     
     # HTTP tools
@@ -196,7 +196,6 @@ install_code_analysis_tools() {
     
     # Static analysis
     pip3 install semgrep bandit safety
-    go install github.com/securecodewarrior/github-action-add-sarif@latest
     
     # Secret scanning
     go install github.com/trufflesecurity/trufflehog/v3@latest
@@ -216,7 +215,11 @@ install_osint_tools() {
     pip3 install dnspython
     
     # Certificate transparency
-    go install github.com/projectdiscovery/ctfr@latest
+    git clone https://github.com/UnaPibaGeek/ctfr.git /tmp/ctfr
+    cd /tmp/ctfr && pip3 install -r requirements.txt
+    sudo cp ctfr.py /usr/local/bin/ctfr
+    sudo chmod +x /usr/local/bin/ctfr
+    cd - && rm -rf /tmp/ctfr
     
     # Wayback machine
     pip3 install waybackpy
