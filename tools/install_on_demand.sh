@@ -124,7 +124,15 @@ install_web_tools() {
     log "Installing web application security tools..."
     
     # Core web scanners
-    pip3 install nuclei-python wapiti3 sqlmap xsstrike commix ssrfmap
+    # Web vulnerability scanners (nuclei is installed via Go, not Python)
+    pip3 install wapiti3 sqlmap xsstrike commix
+    
+    # Install SSRFmap from GitHub (not available on PyPI)
+    git clone https://github.com/swisskyrepo/SSRFmap.git /tmp/ssrfmap
+    cd /tmp/ssrfmap && pip3 install -r requirements.txt
+    sudo cp ssrfmap.py /usr/local/bin/ssrfmap
+    sudo chmod +x /usr/local/bin/ssrfmap
+    cd - && rm -rf /tmp/ssrfmap
     
     # Directory/file fuzzers
     go install github.com/ffuf/ffuf/v2@latest
@@ -144,6 +152,21 @@ install_web_tools() {
     if ! command -v burpsuite &> /dev/null; then
         warn "Burp Suite not found. Please install manually from PortSwigger website."
     fi
+    
+    # CORS and GraphQL security tools
+    # Install Corsy from GitHub (not available on PyPI)
+    git clone https://github.com/s0md3v/Corsy.git /tmp/corsy
+    cd /tmp/corsy && pip3 install -r requirements.txt
+    sudo cp corsy.py /usr/local/bin/corsy
+    sudo chmod +x /usr/local/bin/corsy
+    cd - && rm -rf /tmp/corsy
+    
+    # Install GraphQL-Cop from GitHub (not available on PyPI)
+    git clone https://github.com/dolevf/graphql-cop.git /tmp/graphql-cop
+    cd /tmp/graphql-cop && pip3 install -r requirements.txt
+    sudo cp graphql-cop.py /usr/local/bin/graphql-cop
+    sudo chmod +x /usr/local/bin/graphql-cop
+    cd - && rm -rf /tmp/graphql-cop
     
     # Custom web exploitation tools
     pip3 install paramiko pycryptodome jwt
@@ -249,7 +272,12 @@ install_exploitation_tools() {
     git clone https://github.com/tennc/webshell.git "$TOOLS_DIR/webshells" || true
     
     # Reverse shell generators
-    pip3 install reverse-shell-generator
+    # Install reverse shell generator from GitHub (not available on PyPI)
+    git clone https://github.com/0dayCTF/reverse-shell-generator.git /tmp/reverse-shell-generator
+    cd /tmp/reverse-shell-generator && pip3 install -r requirements.txt
+    sudo cp revshell.py /usr/local/bin/revshell
+    sudo chmod +x /usr/local/bin/revshell
+    cd - && rm -rf /tmp/reverse-shell-generator
 }
 
 install_ai_ml_tools() {

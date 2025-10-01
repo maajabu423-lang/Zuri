@@ -175,9 +175,27 @@ jobs:
         go install -v github.com/BishopFox/jsluice/cmd/jsluice@latest
         
         # Python-based tools
-        pip install arjun paramspider sqlmap commix xsstrike
-        pip install corsy shcheck cloudsplaining s3scanner
-        pip install graphql-cop inql
+        pip install arjun sqlmap commix xsstrike
+        
+        # Install ParamSpider from GitHub (not available on PyPI)
+        git clone https://github.com/devanshbatham/ParamSpider.git /tmp/paramspider
+        cd /tmp/paramspider && pip install -r requirements.txt && pip install .
+        cd - && rm -rf /tmp/paramspider
+        # Install Corsy from GitHub (not available on PyPI)
+        git clone https://github.com/s0md3v/Corsy.git /tmp/corsy
+        cd /tmp/corsy && pip install -r requirements.txt
+        sudo cp corsy.py /usr/local/bin/corsy
+        sudo chmod +x /usr/local/bin/corsy
+        cd - && rm -rf /tmp/corsy
+        
+        # Install GraphQL-Cop from GitHub (not available on PyPI)
+        git clone https://github.com/dolevf/graphql-cop.git /tmp/graphql-cop
+        cd /tmp/graphql-cop && pip install -r requirements.txt
+        sudo cp graphql-cop.py /usr/local/bin/graphql-cop
+        sudo chmod +x /usr/local/bin/graphql-cop
+        cd - && rm -rf /tmp/graphql-cop
+        
+        pip install shcheck cloudsplaining s3scanner inql
         
         # Node.js-based tools
         npm install -g newman
