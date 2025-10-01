@@ -85,7 +85,21 @@ jobs:
           libpcap0.8-dev \
           build-essential \
           gcc \
-          libc6-dev
+          libc6-dev \
+          libopencv-dev \
+          python3-opencv \
+          libgtk-3-dev \
+          libavcodec-dev \
+          libavformat-dev \
+          libswscale-dev \
+          libv4l-dev \
+          libxvidcore-dev \
+          libx264-dev \
+          libjpeg-dev \
+          libpng-dev \
+          libtiff-dev \
+          libatlas-base-dev \
+          gfortran
           
     - name: 🌐 Install Google Chrome
       run: |
@@ -152,10 +166,10 @@ jobs:
         pip install -r requirements.txt || echo "Some packages may have failed, continuing..."
         
         # Install critical missing dependencies that are essential for the hunt with specific versions
-        pip install --no-deps dnspython python-whois shodan censys sqlparse paramiko scapy cryptography numpy pandas matplotlib seaborn networkx python-magic || echo "Some critical dependencies failed, continuing..."
+        pip install --no-deps dnspython python-whois shodan censys sqlparse paramiko scapy cryptography numpy pandas matplotlib seaborn networkx python-magic opencv-python aiohttp aiofiles Pillow selenium || echo "Some critical dependencies failed, continuing..."
         
         # Install dependencies for the packages that were installed with --no-deps
-        pip install requests urllib3 certifi charset-normalizer idna || echo "Some dependency packages failed, continuing..."
+        pip install requests urllib3 certifi charset-normalizer idna yarl multidict async-timeout attrs aiosignal frozenlist || echo "Some dependency packages failed, continuing..."
         
         # Verify critical imports work
         python3 -c "
@@ -163,6 +177,11 @@ jobs:
             import dns.resolver
             import whois
             import shodan
+            import cv2
+            import aiohttp
+            import aiofiles
+            from PIL import Image
+            import selenium
             print('✅ Critical dependencies verified')
         except ImportError as e:
             print(f'⚠️ Some dependencies missing: {e}')
