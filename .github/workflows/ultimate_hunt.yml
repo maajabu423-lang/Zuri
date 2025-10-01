@@ -64,16 +64,15 @@ jobs:
           ca-certificates \
           gnupg \
           lsb-release \
-          libgl1-mesa-glx \
+          libgl1-mesa-dri \
           libglib2.0-0 \
           libsm6 \
           libxext6 \
           libxrender-dev \
           libgomp1 \
-          libgconf-2-4 \
           libxss1 \
           libappindicator3-1 \
-          libasound2 \
+          libasound2t64 \
           libatk-bridge2.0-0 \
           libdrm2 \
           libxcomposite1 \

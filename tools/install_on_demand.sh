@@ -2,6 +2,7 @@
 
 # AEGIS-X Professional Tool Installation Script
 # Installs security tools on-demand based on target type and hunting requirements
+# Updated for Ubuntu 24.04 (Noble) compatibility
 
 set -e
 
@@ -31,9 +32,93 @@ info() {
     echo -e "${BLUE}[INFO]${NC} $1" | tee -a "$LOG_FILE"
 }
 
+# Detect Ubuntu version for compatibility
+detect_ubuntu_version() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        UBUNTU_VERSION=$VERSION_ID
+        UBUNTU_CODENAME=$VERSION_CODENAME
+        log "Detected Ubuntu $UBUNTU_VERSION ($UBUNTU_CODENAME)"
+    else
+        warn "Could not detect Ubuntu version, assuming latest"
+        UBUNTU_VERSION="24.04"
+        UBUNTU_CODENAME="noble"
+    fi
+}
+
+# Install system dependencies with Ubuntu 24.04 compatibility
+install_system_dependencies() {
+    log "Installing system dependencies for Ubuntu $UBUNTU_VERSION..."
+    
+    sudo apt-get update
+    
+    # Base packages that work across versions
+    sudo apt-get install -y \
+        build-essential \
+        curl \
+        wget \
+        git \
+        unzip \
+        software-properties-common \
+        apt-transport-https \
+        ca-certificates \
+        gnupg \
+        lsb-release
+    
+    # Version-specific packages
+    if [[ "$UBUNTU_VERSION" == "24.04" || "$UBUNTU_CODENAME" == "noble" ]]; then
+        log "Installing Ubuntu 24.04 specific packages..."
+        sudo apt-get install -y \
+            libgl1-mesa-dri \
+            libasound2t64 \
+            libglib2.0-0 \
+            libsm6 \
+            libxext6 \
+            libxrender-dev \
+            libgomp1 \
+            libxss1 \
+            libappindicator3-1 \
+            libatk-bridge2.0-0 \
+            libdrm2 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxrandr2 \
+            libgbm1 \
+            libxkbcommon0 \
+            libgtk-3-0
+    else
+        log "Installing packages for older Ubuntu versions..."
+        sudo apt-get install -y \
+            libgl1-mesa-glx \
+            libasound2 \
+            libgconf-2-4 \
+            libglib2.0-0 \
+            libsm6 \
+            libxext6 \
+            libxrender-dev \
+            libgomp1 \
+            libxss1 \
+            libappindicator3-1 \
+            libatk-bridge2.0-0 \
+            libdrm2 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxrandr2 \
+            libgbm1 \
+            libxkbcommon0 \
+            libgtk-3-0
+    fi
+}
+
 # Create tools directory
 sudo mkdir -p "$TOOLS_DIR"
 sudo chown -R $(whoami):$(whoami) "$TOOLS_DIR"
+
+# Detect Ubuntu version
+detect_ubuntu_version
+
+# Install system dependencies
+install_system_dependencies
 
 install_web_tools() {
     log "Installing web application security tools..."

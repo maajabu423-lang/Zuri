@@ -75,9 +75,11 @@ AEGIS-X AUTONOMOUS HUNTING SYSTEM
 ```bash
 git clone https://github.com/your-username/aegis-x.git
 cd aegis-x
-chmod +x setup.sh
-./setup.sh
+chmod +x tools/install_on_demand.sh
+./tools/install_on_demand.sh
 ```
+
+> **🐧 Ubuntu 24.04 Users:** AEGIS-X is fully compatible with Ubuntu 24.04 (Noble). The installation script automatically detects your OS version and installs the correct packages. See [Ubuntu 24.04 Compatibility Guide](UBUNTU_24_04_COMPATIBILITY.md) for details.
 
 ### 2. **Configure Targets**
 Edit `targets.txt`:
@@ -232,6 +234,25 @@ AEGIS-X continuously improves through:
 - Monitors false positive rates
 - Measures hunt efficiency
 - Benchmarks against previous runs
+
+## 🐧 **System Compatibility**
+
+AEGIS-X supports multiple operating systems with automatic compatibility detection:
+
+### **Supported Platforms**
+- **✅ Ubuntu 24.04 (Noble)** - Fully supported with automatic package mapping
+- **✅ Ubuntu 22.04 (Jammy)** - Native support
+- **✅ Ubuntu 20.04 (Focal)** - Native support  
+- **✅ Debian 12 (Bookworm)** - Fully supported
+- **✅ Debian 11 (Bullseye)** - Native support
+
+### **Automatic Compatibility Features**
+- **🔍 OS Detection** - Automatically detects Ubuntu/Debian version
+- **📦 Smart Package Mapping** - Maps deprecated packages to current equivalents
+- **🔄 Backward Compatibility** - Works across all supported versions
+- **⚡ Zero Configuration** - No manual adjustments needed
+
+> **📖 For detailed compatibility information, see:** [Ubuntu 24.04 Compatibility Guide](UBUNTU_24_04_COMPATIBILITY.md)
 
 ## 🔒 **Ethical & Legal Compliance**
 
