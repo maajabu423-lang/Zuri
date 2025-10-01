@@ -18,6 +18,7 @@ Your AEGIS-X Ultimate Bug Bounty System is now **100% OPERATIONAL** and ready fo
 - **Exit Code 100:** "No files were found with the provided path: evidence/screenshots/ evidence/network/ evidence/payloads/"
 - **Empty Directories:** Evidence collector created directories but they remained empty during artifact upload
 - **Ubuntu 24.04 Dependency Errors:** `libgl1-mesa-glx`, `libgconf-2-4`, `libasound2` package compatibility issues
+- **ChromeDriver Installation Failure:** Chrome 115+ compatibility issues with deprecated ChromeDriver API
 
 ### ✅ Solutions Implemented
 
@@ -47,6 +48,15 @@ Your AEGIS-X Ultimate Bug Bounty System is now **100% OPERATIONAL** and ready fo
 - ✅ **GitHub Actions Update:** Updated workflow with Ubuntu 24.04 compatible packages
 - ✅ **Backward Compatibility:** Maintained support for Ubuntu 20.04, 22.04, and Debian systems
 - ✅ **Documentation:** Created comprehensive Ubuntu 24.04 compatibility guide
+
+#### 5. **ChromeDriver Installation Fix**
+- ✅ **API Migration:** Updated from deprecated `chromedriver.storage.googleapis.com` to Chrome for Testing API
+- ✅ **Version Detection:** Automatic Chrome version detection and appropriate API selection
+- ✅ **Chrome 115+ Support:** Full compatibility with modern Chrome versions using new distribution system
+- ✅ **Legacy Support:** Maintained support for Chrome versions < 115 using legacy API
+- ✅ **Enhanced Installation Script:** Added `install_chrome_and_chromedriver()` function with proper error handling
+- ✅ **GitHub Actions Update:** Updated workflow with robust ChromeDriver installation logic
+- ✅ **Documentation:** Created comprehensive ChromeDriver fix guide
 
 ---
 

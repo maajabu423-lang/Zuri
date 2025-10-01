@@ -254,8 +254,71 @@ install_ai_ml_tools() {
     pip3 install opencv-python pillow
 }
 
+install_chrome_and_chromedriver() {
+    log "Installing Google Chrome and ChromeDriver..."
+    
+    # Install Google Chrome
+    if ! command -v google-chrome &> /dev/null; then
+        log "Installing Google Chrome..."
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+    else
+        log "Google Chrome already installed"
+    fi
+    
+    # Install ChromeDriver with proper version matching
+    if ! command -v chromedriver &> /dev/null; then
+        log "Installing ChromeDriver..."
+        
+        # Get Chrome version
+        CHROME_VERSION=$(google-chrome --version | cut -d " " -f3)
+        log "Chrome version: $CHROME_VERSION"
+        
+        # For Chrome 115+, use Chrome for Testing API
+        MAJOR_VERSION=$(echo $CHROME_VERSION | cut -d "." -f1)
+        
+        if [ "$MAJOR_VERSION" -ge 115 ]; then
+            log "Using Chrome for Testing API for Chrome $MAJOR_VERSION+"
+            # Get the latest ChromeDriver version for this Chrome version
+            CHROMEDRIVER_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_$MAJOR_VERSION")
+            if [ -z "$CHROMEDRIVER_VERSION" ]; then
+                # Fallback to stable version
+                CHROMEDRIVER_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_STABLE")
+            fi
+            log "ChromeDriver version: $CHROMEDRIVER_VERSION"
+            
+            # Download ChromeDriver from Chrome for Testing
+            wget -O /tmp/chromedriver.zip "https://storage.googleapis.com/chrome-for-testing-public/${CHROMEDRIVER_VERSION}/linux64/chromedriver-linux64.zip"
+            sudo unzip /tmp/chromedriver.zip -d /tmp/
+            sudo mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/
+            sudo chmod +x /usr/local/bin/chromedriver
+            rm -rf /tmp/chromedriver.zip /tmp/chromedriver-linux64
+        else
+            log "Using legacy ChromeDriver API for Chrome $MAJOR_VERSION"
+            # For older Chrome versions, use the legacy method
+            CHROME_VERSION_SHORT=$(echo $CHROME_VERSION | cut -d "." -f1-3)
+            CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION_SHORT}")
+            wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+            sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
+            sudo chmod +x /usr/local/bin/chromedriver
+            rm -f /tmp/chromedriver.zip
+        fi
+        
+        # Verify installation
+        chromedriver --version
+        log "ChromeDriver installed successfully"
+    else
+        log "ChromeDriver already installed"
+    fi
+}
+
 install_reporting_tools() {
     log "Installing reporting and documentation tools..."
+    
+    # Install Chrome and ChromeDriver first
+    install_chrome_and_chromedriver
     
     # Report generation
     pip3 install reportlab markdown2 jinja2

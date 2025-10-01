@@ -258,6 +258,10 @@ If you encounter issues with Ubuntu 24.04 compatibility:
 3. **Run Enhanced Installer:** `./tools/install_on_demand.sh`
 4. **Verify Installation:** `python3 aegis_x_ultimate_master.py --help`
 
+### **Related Issues**
+- **ChromeDriver Problems:** See [ChromeDriver Fix Guide](CHROMEDRIVER_FIX.md)
+- **General Installation Issues:** Check [Dependency Fix Summary](DEPENDENCY_FIX_SUMMARY.md)
+
 ## 📝 Changelog
 
 ### v5.1 - Ubuntu 24.04 Compatibility
