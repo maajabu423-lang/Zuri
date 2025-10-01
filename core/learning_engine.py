@@ -50,6 +50,151 @@ class LearningEngine:
         
         self.logger.info("🧠 Learning Engine initialized with adaptive intelligence")
     
+    async def learn_from_session(self, session_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Learn from a completed hunting session"""
+        self.logger.info(f"🧠 Learning from session: {session_data.get('session_id', 'unknown')}")
+        
+        learning_results = {
+            "session_id": session_data.get("session_id"),
+            "learning_timestamp": datetime.now().isoformat(),
+            "insights_gained": [],
+            "adaptations_made": [],
+            "performance_improvements": {}
+        }
+        
+        try:
+            # Analyze findings patterns
+            findings = session_data.get("findings", [])
+            if findings:
+                pattern_insights = self._analyze_findings_patterns(findings)
+                learning_results["insights_gained"].extend(pattern_insights)
+            
+            # Analyze evidence quality
+            evidence_packages = session_data.get("evidence_packages", [])
+            if evidence_packages:
+                evidence_insights = self._analyze_evidence_quality(evidence_packages)
+                learning_results["insights_gained"].extend(evidence_insights)
+            
+            # Analyze quality metrics
+            quality_metrics = session_data.get("quality_metrics", {})
+            if quality_metrics:
+                quality_insights = self._analyze_quality_metrics(quality_metrics)
+                learning_results["insights_gained"].extend(quality_insights)
+            
+            # Update learning data
+            self._update_learning_data(session_data)
+            
+            # Save learning results
+            await self._save_learning_results(learning_results)
+            
+            self.logger.info(f"✅ Learning completed - {len(learning_results['insights_gained'])} insights gained")
+            
+            return learning_results
+            
+        except Exception as e:
+            self.logger.error(f"Learning from session failed: {str(e)}")
+            learning_results["error"] = str(e)
+            return learning_results
+    
+    def _analyze_findings_patterns(self, findings: List[Dict[str, Any]]) -> List[str]:
+        """Analyze patterns in findings"""
+        insights = []
+        
+        # Analyze severity distribution
+        severity_counts = {}
+        for finding in findings:
+            severity = finding.get("severity", "unknown").lower()
+            severity_counts[severity] = severity_counts.get(severity, 0) + 1
+        
+        if severity_counts:
+            most_common = max(severity_counts, key=severity_counts.get)
+            insights.append(f"Most common vulnerability severity: {most_common}")
+        
+        # Analyze vulnerability types
+        vuln_types = {}
+        for finding in findings:
+            title = finding.get("title", "").lower()
+            if "xss" in title:
+                vuln_types["xss"] = vuln_types.get("xss", 0) + 1
+            elif "sql" in title:
+                vuln_types["sqli"] = vuln_types.get("sqli", 0) + 1
+            elif "ssrf" in title:
+                vuln_types["ssrf"] = vuln_types.get("ssrf", 0) + 1
+        
+        if vuln_types:
+            most_common_type = max(vuln_types, key=vuln_types.get)
+            insights.append(f"Most common vulnerability type: {most_common_type}")
+        
+        return insights
+    
+    def _analyze_evidence_quality(self, evidence_packages: List[Dict[str, Any]]) -> List[str]:
+        """Analyze evidence quality patterns"""
+        insights = []
+        
+        if evidence_packages:
+            quality_scores = [
+                ep.get("metadata", {}).get("evidence_quality_score", 0.0)
+                for ep in evidence_packages
+            ]
+            
+            if quality_scores:
+                avg_quality = sum(quality_scores) / len(quality_scores)
+                insights.append(f"Average evidence quality score: {avg_quality:.2f}")
+                
+                if avg_quality < 0.7:
+                    insights.append("Evidence quality below threshold - need improvement")
+                elif avg_quality > 0.9:
+                    insights.append("Excellent evidence quality maintained")
+        
+        return insights
+    
+    def _analyze_quality_metrics(self, quality_metrics: Dict[str, Any]) -> List[str]:
+        """Analyze overall quality metrics"""
+        insights = []
+        
+        overall_score = quality_metrics.get("overall_quality_score", 0.0)
+        verification_rate = quality_metrics.get("verification_rate", 0.0)
+        
+        insights.append(f"Overall quality score: {overall_score:.2f}")
+        insights.append(f"Verification rate: {verification_rate:.2f}")
+        
+        if verification_rate < 0.5:
+            insights.append("Low verification rate - need better vulnerability detection")
+        elif verification_rate > 0.8:
+            insights.append("High verification rate - excellent detection accuracy")
+        
+        return insights
+    
+    def _update_learning_data(self, session_data: Dict[str, Any]):
+        """Update learning data with session results"""
+        # Update session count
+        self.learning_data["total_sessions"] = self.learning_data.get("total_sessions", 0) + 1
+        
+        # Update findings count
+        findings_count = len(session_data.get("findings", []))
+        self.learning_data["total_findings"] = self.learning_data.get("total_findings", 0) + findings_count
+        
+        # Update quality metrics history
+        quality_metrics = session_data.get("quality_metrics", {})
+        if quality_metrics:
+            if "quality_history" not in self.learning_data:
+                self.learning_data["quality_history"] = []
+            
+            self.learning_data["quality_history"].append({
+                "timestamp": datetime.now().isoformat(),
+                "metrics": quality_metrics
+            })
+    
+    async def _save_learning_results(self, learning_results: Dict[str, Any]):
+        """Save learning results to file"""
+        learning_dir = Path("learn")
+        learning_dir.mkdir(exist_ok=True)
+        
+        results_file = learning_dir / f"learning_results_{int(datetime.now().timestamp())}.json"
+        
+        with open(results_file, 'w', encoding='utf-8') as f:
+            json.dump(learning_results, f, indent=2, default=str)
+    
     def _load_learning_data(self) -> Dict[str, Any]:
         """Load comprehensive learning data"""
         learning_file = Path("learn/master_learning.json")
