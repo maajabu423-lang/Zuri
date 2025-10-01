@@ -80,7 +80,12 @@ jobs:
           libxrandr2 \
           libgbm1 \
           libxkbcommon0 \
-          libgtk-3-0
+          libgtk-3-0 \
+          libpcap-dev \
+          libpcap0.8-dev \
+          build-essential \
+          gcc \
+          libc6-dev
           
     - name: 🌐 Install Google Chrome
       run: |

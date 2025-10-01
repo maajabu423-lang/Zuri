@@ -254,6 +254,12 @@ AEGIS-X supports multiple operating systems with automatic compatibility detecti
 
 > **📖 For detailed compatibility information, see:** [Ubuntu 24.04 Compatibility Guide](UBUNTU_24_04_COMPATIBILITY.md)
 
+### **🛠️ Troubleshooting Guides**
+- **ChromeDriver Issues:** [ChromeDriver Fix Guide](CHROMEDRIVER_FIX.md)
+- **Go Network Tools Compilation:** [Go Network Tools Fix](GO_NETWORK_TOOLS_FIX.md)
+- **Ubuntu 24.04 Compatibility:** [Ubuntu 24.04 Compatibility Guide](UBUNTU_24_04_COMPATIBILITY.md)
+- **General Installation Issues:** [Dependency Fix Summary](DEPENDENCY_FIX_SUMMARY.md)
+
 ## 🔒 **Ethical & Legal Compliance**
 
 AEGIS-X operates within strict ethical boundaries:

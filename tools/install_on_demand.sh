@@ -169,6 +169,15 @@ install_mobile_tools() {
 install_network_tools() {
     log "Installing network security tools..."
     
+    # Install development headers required for Go network tools
+    log "Installing development packages for network tools..."
+    sudo apt-get install -y \
+        libpcap-dev \
+        libpcap0.8-dev \
+        build-essential \
+        gcc \
+        libc6-dev
+    
     # Port scanners
     sudo apt-get install -y nmap masscan
     go install github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
