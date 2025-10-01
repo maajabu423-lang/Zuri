@@ -20,15 +20,15 @@ selenium>=4.15.0
 
 # Advanced Security Testing Tools
 arjun>=2.2.1
-paramspider>=1.9.3
+# paramspider - Install from GitHub (not available on PyPI)
 sqlmap>=1.7.8
 commix>=3.7
 xsstrike>=3.1.5
-corsy>=0.0.16
+# corsy - Install from GitHub (not available on PyPI)
 shcheck>=1.7.0
 cloudsplaining>=0.6.2
-s3scanner>=3.0.4
-graphql-cop>=1.2
+# s3scanner - Install via Go (go install github.com/sa7mon/s3scanner@latest)
+# graphql-cop - Install from GitHub (not available on PyPI)
 inql>=5.0.0
 
 # Network and Protocol Analysis
@@ -149,7 +149,7 @@ ldap3>=2.9.1
 tensorflow>=2.13.0
 
 # Additional Security Libraries
-nuclei-python>=1.0.0
+# nuclei-python - Package doesn't exist (use Go nuclei instead)
 sqlparse>=0.4.4
 virustotal-api>=1.1.11
 
@@ -167,7 +167,7 @@ azure-identity>=1.14.0
 google-cloud-storage>=2.10.0
 
 # API Testing
-postman-python>=0.1.0
+# postman-python - Package doesn't exist (use newman CLI tool instead)
 swagger-spec-validator>=3.0.3
 
 # Advanced Fuzzing
