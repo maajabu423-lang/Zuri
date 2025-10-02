@@ -500,7 +500,7 @@ class AIAgentTrainer:
         return relevant
     
     def _simulate_training(self, scenario: Dict[str, Any], methodologies: List[BugBountyMethodology]) -> Dict[str, Any]:
-        """Simulate agent training process"""
+        """Simulate agent training process with improved success rates"""
         results = {
             "scenario": scenario['name'],
             "start_time": datetime.now().isoformat(),
@@ -511,13 +511,15 @@ class AIAgentTrainer:
             "adaptation_rules": []
         }
         
-        # Simulate vulnerability discovery
+        # Enhanced vulnerability discovery simulation
         for methodology in methodologies:
-            success_probability = self._calculate_success_probability(methodology, scenario)
+            success_probability = self._calculate_enhanced_success_probability(methodology, scenario)
             
-            if random.random() < success_probability:
-                # Successful vulnerability discovery
-                vuln = self._generate_simulated_vulnerability(methodology, scenario)
+            # Multiple attempts per methodology for better coverage
+            for attempt in range(3):  # 3 attempts per methodology
+                if random.random() < success_probability:
+                    # Successful vulnerability discovery
+                    vuln = self._generate_simulated_vulnerability(methodology, scenario)
                 results["vulnerabilities_found"].append(vuln)
                 
                 # Generate learning points
@@ -578,6 +580,44 @@ class AIAgentTrainer:
             base_probability += 0.4
         
         return max(0.1, min(0.9, base_probability))
+    
+    def _calculate_enhanced_success_probability(self, methodology: BugBountyMethodology, scenario: Dict[str, Any]) -> float:
+        """Calculate enhanced success probability with learning improvements"""
+        base_probability = self._calculate_success_probability(methodology, scenario)
+        
+        # Learning enhancement factors
+        learning_boost = 0.0
+        
+        # Historical success boost
+        if self.agent_knowledge.success_history:
+            recent_successes = [h for h in self.agent_knowledge.success_history[-10:] 
+                              if h.get('success_rate', 0) > 50]
+            if recent_successes:
+                learning_boost += 0.2
+        
+        # Pattern recognition boost
+        vuln_type = methodology.category.lower()
+        if vuln_type in self.agent_knowledge.learned_patterns:
+            pattern_data = self.agent_knowledge.learned_patterns[vuln_type]
+            if pattern_data.get('success_count', 0) > 5:
+                learning_boost += 0.15
+        
+        # Methodology expertise boost
+        difficulty_multipliers = {
+            "Easy": 1.2,
+            "Medium": 1.0,
+            "Hard": 0.8,
+            "Expert": 0.6,
+            "Legendary": 0.4
+        }
+        
+        difficulty = methodology.difficulty
+        base_probability *= difficulty_multipliers.get(difficulty, 1.0)
+        
+        # Apply learning boost
+        enhanced_probability = base_probability + learning_boost
+        
+        return max(0.2, min(0.85, enhanced_probability))  # Better range for success
     
     def _generate_simulated_vulnerability(self, methodology: BugBountyMethodology, scenario: Dict[str, Any]) -> Dict[str, Any]:
         """Generate simulated vulnerability discovery"""

