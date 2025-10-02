@@ -1858,3 +1858,494 @@ client_session: <aiohttp.client.ClientSession object at 0x762136b59a60>
 2025-10-02 14:06:28,200 - asyncio - ERROR - Unclosed connector
 connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x762136b6b650>, 71224.788730946), (<aiohttp.client_proto.ResponseHandler object at 0x762136b6b290>, 71225.051832043), (<aiohttp.client_proto.ResponseHandler object at 0x762136b6adb0>, 71225.749219472), (<aiohttp.client_proto.ResponseHandler object at 0x762136b6b470>, 71226.048297628), (<aiohttp.client_proto.ResponseHandler object at 0x762136b6b170>, 71226.338270513)])']
 connector: <aiohttp.connector.TCPConnector object at 0x762138f4b200>
+2025-10-02 16:55:51,008 - __main__ - INFO - 🔥 Initializing AEGIS-X Ultimate Master System...
+2025-10-02 16:55:51,576 - core.professional_vulnerability_arsenal - INFO - 🔥 Professional Vulnerability Arsenal v4.0 initialized
+2025-10-02 16:55:51,576 - core.professional_vulnerability_arsenal - INFO - 📊 Categories: 29
+2025-10-02 16:55:51,576 - core.professional_vulnerability_arsenal - INFO - 💀 Total patterns: 294
+2025-10-02 16:55:51,576 - core.professional_vulnerability_arsenal - INFO - 🎯 Coverage: OWASP Top 10, SANS Top 25, CWE, Zero-Days
+2025-10-02 16:55:51,577 - core.zero_day_discovery_engine - INFO - 🔬 Zero-Day Discovery Engine v3.0 initialized
+2025-10-02 16:55:51,577 - core.zero_day_discovery_engine - INFO - 🧬 Loaded 10 fuzzing categories
+2025-10-02 16:55:51,577 - core.zero_day_discovery_engine - INFO - 🎯 Novel attack vectors: 4
+2025-10-02 16:55:51,578 - core.threat_intelligence_engine - INFO - 🔍 Threat Intelligence Engine v2.0 initialized
+2025-10-02 16:55:51,578 - core.threat_intelligence_engine - INFO - 📡 Monitoring 5 threat intelligence feeds
+2025-10-02 16:55:51,578 - core.threat_intelligence_engine - INFO - 🎯 Tracking 20 vulnerability categories
+2025-10-02 16:55:51,578 - __main__ - INFO - 🚀 AEGIS-X Ultimate Master System v7.0 initialized
+2025-10-02 16:55:51,578 - __main__ - INFO - 📊 Payload Arsenal: 100,055 patterns loaded
+2025-10-02 16:55:51,578 - __main__ - INFO - 🥷 Stealth Engine: 4 profiles available
+2025-10-02 16:55:51,578 - __main__ - INFO - 🤖 AI Trainer: 9 methodologies loaded
+2025-10-02 16:55:51,578 - __main__ - INFO - 🔍 Threat Intelligence: 5 feeds monitored
+2025-10-02 16:55:51,578 - __main__ - INFO - 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+2025-10-02 16:55:51,578 - __main__ - INFO - 🚀 STARTING ULTIMATE AEGIS-X CAMPAIGN v7.0
+2025-10-02 16:55:51,578 - __main__ - INFO - 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+2025-10-02 16:55:51,578 - __main__ - INFO - 📊 Campaign ID: ultimate_campaign_1759424151
+2025-10-02 16:55:51,578 - __main__ - INFO - 🎯 Target: https://httpbin.org
+2025-10-02 16:55:51,578 - __main__ - INFO - ⏰ Time Limit: 1 minutes
+2025-10-02 16:55:51,578 - __main__ - INFO - 🥷 Stealth Profile: ghost
+2025-10-02 16:55:51,578 - __main__ - INFO - 🤖 AI Training: True
+2025-10-02 16:55:51,578 - __main__ - INFO - 💀 Payload Arsenal: 100,055 patterns
+2025-10-02 16:55:51,578 - __main__ - INFO - 🎯 Success Criteria: {'min_critical_vulns': 5, 'min_high_vulns': 10, 'min_medium_vulns': 25, 'min_total_vulns': 40, 'min_verified_rate': 0.8, 'min_confidence_score': 0.75, 'min_exploitability_score': 0.6, 'min_exceptional_vulns': 1}
+2025-10-02 16:55:51,578 - __main__ - INFO - 💀 GUARANTEED TO FIND EXCEPTIONAL VULNERABILITIES
+2025-10-02 16:55:51,578 - __main__ - INFO - 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+2025-10-02 16:55:51,578 - AEGIS-X.EliteVulnerabilityEngine - INFO - 🔥 Elite Vulnerability Engine initialized
+2025-10-02 16:55:51,578 - AEGIS-X.EliteVulnerabilityEngine - INFO - 🎯 Loaded 154 elite payloads
+2025-10-02 16:55:51,578 - AEGIS-X.EliteVulnerabilityEngine - INFO - 🔍 Configured 16 reconnaissance techniques
+2025-10-02 16:55:51,592 - __main__ - INFO - 💉 Injected 100,055 ultimate payloads into vulnerability engine
+2025-10-02 16:55:51,593 - AEGIS-X.EliteVerificationEngine - INFO - 🔥 Elite Verification Engine initialized
+2025-10-02 16:55:51,594 - AEGIS-X.EliteVerificationEngine - INFO - 🔍 Configured 6 verification layers
+2025-10-02 16:55:51,594 - AEGIS-X.EliteVerificationEngine - INFO - 🎯 Loaded 10 vulnerability-specific techniques
+2025-10-02 16:55:51,594 - __main__ - INFO - ⚡ All engines initialized successfully
+2025-10-02 16:55:51,594 - core.stealth_evasion_engine - INFO - 🥷 Stealth profile set to: ghost
+2025-10-02 16:55:51,594 - __main__ - INFO - 📡 PHASE 1: THREAT INTELLIGENCE UPDATE
+2025-10-02 16:55:51,594 - core.threat_intelligence_engine - INFO - 📡 Updating threat intelligence from external sources...
+2025-10-02 16:55:51,594 - core.threat_intelligence_engine - INFO - 📊 Updating CVE intelligence...
+2025-10-02 16:55:51,595 - core.threat_intelligence_engine - INFO - 💥 Updating exploit intelligence...
+2025-10-02 16:55:51,595 - core.threat_intelligence_engine - INFO - 💥 Retrieved 5 recent exploits
+2025-10-02 16:55:51,595 - core.threat_intelligence_engine - INFO - 🔥 High priority exploits: 3
+2025-10-02 16:55:51,595 - core.threat_intelligence_engine - INFO - 📋 Updating security advisories...
+2025-10-02 16:55:51,595 - core.threat_intelligence_engine - INFO - 📋 Retrieved 3 security advisories
+2025-10-02 16:55:51,595 - core.threat_intelligence_engine - INFO - 🎯 Updating technology-specific threats...
+2025-10-02 16:55:51,595 - core.threat_intelligence_engine - INFO - 🎯 Updated threats for 8 technologies
+2025-10-02 16:55:51,692 - core.threat_intelligence_engine - INFO - 📊 Retrieved 0 recent CVEs
+2025-10-02 16:55:51,693 - core.threat_intelligence_engine - INFO - 📡 Threat intelligence updated: 4 sources
+2025-10-02 16:55:51,693 - core.threat_intelligence_engine - INFO - 🆕 New CVEs: 0, New Exploits: 5
+2025-10-02 16:55:51,693 - core.threat_intelligence_engine - INFO - 🔥 High priority threats: 5
+2025-10-02 16:55:51,693 - __main__ - INFO - 🧠 PHASE 2: SMART TARGET ANALYSIS & INTELLIGENCE GATHERING
+2025-10-02 16:55:51,693 - __main__ - INFO - 🧠 Performing smart target analysis...
+2025-10-02 16:55:51,706 - __main__ - WARNING - ⚠️ Target analysis failed: Cannot connect to host https:80 ssl:default [Name or service not known]
+2025-10-02 16:55:51,706 - core.threat_intelligence_engine - INFO - 🎯 Generating target-specific threat intelligence...
+2025-10-02 16:55:51,706 - core.threat_intelligence_engine - INFO - 🎯 Target risk score: 50/100
+2025-10-02 16:55:51,706 - core.threat_intelligence_engine - INFO - 🔥 Priority vectors identified: 3
+2025-10-02 16:55:51,706 - __main__ - INFO - 🔍 Threat intelligence integrated - Risk Score: 50/100
+2025-10-02 16:55:51,706 - __main__ - INFO - 🎯 Priority attack vectors: 3
+2025-10-02 16:55:51,707 - __main__ - INFO - 🔗 PHASE 3: VULNERABILITY CHAIN PLANNING
+2025-10-02 16:55:51,707 - __main__ - INFO - 🔗 Building vulnerability chains...
+2025-10-02 16:55:51,707 - __main__ - INFO - 🔗 Built 4 vulnerability chains
+2025-10-02 16:55:51,707 - __main__ - INFO - 🤖 PHASE 4: AI AGENT TRAINING & RECONNAISSANCE
+2025-10-02 16:55:51,707 - __main__ - INFO - 🤖 AI Agent provided 5 methodology recommendations
+2025-10-02 16:55:51,707 - core.ai_agent_trainer - INFO - 🎯 Starting agent training with scenario: E-commerce Platform Assessment
+2025-10-02 16:55:51,707 - __main__ - ERROR - ❌ AI-powered reconnaissance failed: cannot access local variable 'vuln' where it is not associated with a value
+2025-10-02 16:55:51,707 - __main__ - INFO - ⚡ PHASE 5: SMART VULNERABILITY CHAIN EXECUTION
+2025-10-02 16:55:51,707 - __main__ - INFO - 🔗 Executing smart vulnerability chains...
+2025-10-02 16:55:51,707 - __main__ - INFO - 🔗 Starting chain: Authentication Bypass Chain (Priority: 95)
+2025-10-02 16:55:51,707 - __main__ - INFO - 🔗 Executing chain: Authentication Bypass Chain
+2025-10-02 16:55:51,707 - core.stealth_evasion_engine - INFO - 🥷 Stealth profile set to: ninja
+2025-10-02 16:55:51,707 - __main__ - INFO - 🔗 Executing step 1/3: auth_bypass
+2025-10-02 16:55:51,707 - __main__ - INFO - 🧠 Smart prioritization for auth_bypass...
+2025-10-02 16:55:51,707 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for auth_bypass...
+2025-10-02 16:55:51,707 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for auth_bypass
+2025-10-02 16:55:51,707 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,707 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,707 - __main__ - INFO - 🎯 Prioritized 0 payloads for auth_bypass
+2025-10-02 16:55:51,707 - __main__ - WARNING - ⚠️ No payloads available for step: auth_bypass
+2025-10-02 16:55:51,707 - __main__ - INFO - 🔗 Executing step 2/3: privilege_escalation
+2025-10-02 16:55:51,707 - __main__ - INFO - 🧠 Smart prioritization for privilege_escalation...
+2025-10-02 16:55:51,707 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for privilege_escalation...
+2025-10-02 16:55:51,707 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for privilege_escalation
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,708 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,708 - __main__ - INFO - 🎯 Prioritized 0 payloads for privilege_escalation
+2025-10-02 16:55:51,708 - __main__ - WARNING - ⚠️ No payloads available for step: privilege_escalation
+2025-10-02 16:55:51,708 - __main__ - INFO - 🔗 Executing step 3/3: data_extraction
+2025-10-02 16:55:51,708 - __main__ - INFO - 🧠 Smart prioritization for data_extraction...
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for data_extraction...
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for data_extraction
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,708 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,708 - __main__ - INFO - 🎯 Prioritized 0 payloads for data_extraction
+2025-10-02 16:55:51,708 - __main__ - WARNING - ⚠️ No payloads available for step: data_extraction
+2025-10-02 16:55:51,708 - __main__ - WARNING - ⚠️ Chain 'Authentication Bypass Chain' partially successful
+2025-10-02 16:55:51,708 - __main__ - INFO - 🔗 Chain 'Authentication Bypass Chain' completed: 0 vulnerabilities found
+2025-10-02 16:55:51,708 - __main__ - INFO - 🔗 Starting chain: XSS to Account Takeover Chain (Priority: 90)
+2025-10-02 16:55:51,708 - __main__ - INFO - 🔗 Executing chain: XSS to Account Takeover Chain
+2025-10-02 16:55:51,708 - core.stealth_evasion_engine - INFO - 🥷 Stealth profile set to: phantom
+2025-10-02 16:55:51,708 - __main__ - INFO - 🔗 Executing step 1/3: xss_discovery
+2025-10-02 16:55:51,708 - __main__ - INFO - 🧠 Smart prioritization for xss_discovery...
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for xss_discovery...
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for xss_discovery
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,708 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,708 - __main__ - INFO - 🎯 Prioritized 0 payloads for xss_discovery
+2025-10-02 16:55:51,708 - __main__ - WARNING - ⚠️ No payloads available for step: xss_discovery
+2025-10-02 16:55:51,708 - __main__ - INFO - 🔗 Executing step 2/3: session_hijacking
+2025-10-02 16:55:51,708 - __main__ - INFO - 🧠 Smart prioritization for session_hijacking...
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for session_hijacking...
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for session_hijacking
+2025-10-02 16:55:51,708 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,708 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,708 - __main__ - INFO - 🎯 Prioritized 0 payloads for session_hijacking
+2025-10-02 16:55:51,709 - __main__ - WARNING - ⚠️ No payloads available for step: session_hijacking
+2025-10-02 16:55:51,709 - __main__ - INFO - 🔗 Executing step 3/3: account_takeover
+2025-10-02 16:55:51,709 - __main__ - INFO - 🧠 Smart prioritization for account_takeover...
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for account_takeover...
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for account_takeover
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,709 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,709 - __main__ - INFO - 🎯 Prioritized 0 payloads for account_takeover
+2025-10-02 16:55:51,709 - __main__ - WARNING - ⚠️ No payloads available for step: account_takeover
+2025-10-02 16:55:51,709 - __main__ - WARNING - ⚠️ Chain 'XSS to Account Takeover Chain' partially successful
+2025-10-02 16:55:51,709 - __main__ - INFO - 🔗 Chain 'XSS to Account Takeover Chain' completed: 0 vulnerabilities found
+2025-10-02 16:55:51,709 - __main__ - INFO - 🔗 Starting chain: Information Disclosure Chain (Priority: 85)
+2025-10-02 16:55:51,709 - __main__ - INFO - 🔗 Executing chain: Information Disclosure Chain
+2025-10-02 16:55:51,709 - core.stealth_evasion_engine - INFO - 🥷 Stealth profile set to: ninja
+2025-10-02 16:55:51,709 - __main__ - INFO - 🔗 Executing step 1/3: info_disclosure
+2025-10-02 16:55:51,709 - __main__ - INFO - 🧠 Smart prioritization for info_disclosure...
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for info_disclosure...
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for info_disclosure
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,709 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,709 - __main__ - INFO - 🎯 Prioritized 0 payloads for info_disclosure
+2025-10-02 16:55:51,709 - __main__ - WARNING - ⚠️ No payloads available for step: info_disclosure
+2025-10-02 16:55:51,709 - __main__ - INFO - 🔗 Executing step 2/3: credential_harvest
+2025-10-02 16:55:51,709 - __main__ - INFO - 🧠 Smart prioritization for credential_harvest...
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for credential_harvest...
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for credential_harvest
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,709 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,709 - __main__ - INFO - 🎯 Prioritized 0 payloads for credential_harvest
+2025-10-02 16:55:51,709 - __main__ - WARNING - ⚠️ No payloads available for step: credential_harvest
+2025-10-02 16:55:51,709 - __main__ - INFO - 🔗 Executing step 3/3: lateral_movement
+2025-10-02 16:55:51,709 - __main__ - INFO - 🧠 Smart prioritization for lateral_movement...
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for lateral_movement...
+2025-10-02 16:55:51,709 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for lateral_movement
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,710 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,710 - __main__ - INFO - 🎯 Prioritized 0 payloads for lateral_movement
+2025-10-02 16:55:51,710 - __main__ - WARNING - ⚠️ No payloads available for step: lateral_movement
+2025-10-02 16:55:51,710 - __main__ - WARNING - ⚠️ Chain 'Information Disclosure Chain' partially successful
+2025-10-02 16:55:51,710 - __main__ - INFO - 🔗 Chain 'Information Disclosure Chain' completed: 0 vulnerabilities found
+2025-10-02 16:55:51,710 - __main__ - INFO - 🔗 Starting chain: API Security Chain (Priority: 80)
+2025-10-02 16:55:51,710 - __main__ - INFO - 🔗 Executing chain: API Security Chain
+2025-10-02 16:55:51,710 - core.stealth_evasion_engine - INFO - 🥷 Stealth profile set to: phantom
+2025-10-02 16:55:51,710 - __main__ - INFO - 🔗 Executing step 1/3: api_discovery
+2025-10-02 16:55:51,710 - __main__ - INFO - 🧠 Smart prioritization for api_discovery...
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for api_discovery...
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for api_discovery
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,710 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,710 - __main__ - INFO - 🎯 Prioritized 0 payloads for api_discovery
+2025-10-02 16:55:51,710 - __main__ - WARNING - ⚠️ No payloads available for step: api_discovery
+2025-10-02 16:55:51,710 - __main__ - INFO - 🔗 Executing step 2/3: business_logic
+2025-10-02 16:55:51,710 - __main__ - INFO - 🧠 Smart prioritization for business_logic...
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for business_logic...
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for business_logic
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,710 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,710 - __main__ - INFO - 🎯 Prioritized 0 payloads for business_logic
+2025-10-02 16:55:51,710 - __main__ - WARNING - ⚠️ No payloads available for step: business_logic
+2025-10-02 16:55:51,710 - __main__ - INFO - 🔗 Executing step 3/3: data_manipulation
+2025-10-02 16:55:51,710 - __main__ - INFO - 🧠 Smart prioritization for data_manipulation...
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 🧠 Getting payload intelligence for data_manipulation...
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 🧠 Payload intelligence generated for data_manipulation
+2025-10-02 16:55:51,710 - core.threat_intelligence_engine - INFO - 📈 Priority boost: +5 points
+2025-10-02 16:55:51,710 - __main__ - INFO - 🧠 Applying threat intelligence boost: +5 points
+2025-10-02 16:55:51,710 - __main__ - INFO - 🎯 Prioritized 0 payloads for data_manipulation
+2025-10-02 16:55:51,710 - __main__ - WARNING - ⚠️ No payloads available for step: data_manipulation
+2025-10-02 16:55:51,710 - __main__ - WARNING - ⚠️ Chain 'API Security Chain' partially successful
+2025-10-02 16:55:51,711 - __main__ - INFO - 🔗 Chain 'API Security Chain' completed: 0 vulnerabilities found
+2025-10-02 16:55:51,711 - __main__ - INFO - 🔗 Smart vulnerability chains completed: 0 vulnerabilities discovered
+2025-10-02 16:55:51,711 - __main__ - INFO - 📊 Chain success rate: 0.0%
+2025-10-02 16:55:51,711 - __main__ - INFO - 🔬 PHASE 6: ZERO-DAY DISCOVERY
+2025-10-02 16:55:51,711 - __main__ - INFO - 🔬 Starting zero-day discovery...
+2025-10-02 16:55:51,711 - core.zero_day_discovery_engine - INFO - 🔬 Starting zero-day discovery for https://httpbin.org
+2025-10-02 16:55:51,711 - core.zero_day_discovery_engine - INFO - 🧬 Phase 1: Advanced Fuzzing
+2025-10-02 16:56:04,139 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:01,323 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:04,688 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:06,190 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:18,407 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:41,967 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:41,997 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,028 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,159 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,189 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,220 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,251 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,382 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,412 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,443 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,473 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,604 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,635 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,665 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,696 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,827 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,857 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,888 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:42,919 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:43,050 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:43,080 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:43,111 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:43,141 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org
+2025-10-02 16:57:43,273 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,304 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,335 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,466 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,496 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,527 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,658 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,689 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,720 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,851 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,881 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:43,912 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,043 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,073 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,104 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,235 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,266 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,296 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,428 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,458 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,489 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,620 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,651 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,681 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,812 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,843 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:44,873 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:45,004 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:45,035 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:45,065 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org
+2025-10-02 16:57:45,196 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:45,227 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:45,358 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:45,388 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:45,519 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:45,550 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:45,681 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:45,711 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:45,842 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:45,873 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,004 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,035 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,166 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,197 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,327 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,358 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,489 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,519 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,650 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,681 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org
+2025-10-02 16:57:46,812 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:46,842 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:46,873 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,004 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,035 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,065 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,196 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,227 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,257 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,388 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,419 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,449 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,580 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,611 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,641 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,772 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,803 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,834 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,965 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:47,995 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,026 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,157 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,187 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,218 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,349 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,380 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,411 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,542 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,573 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,603 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: memory_corruption in https://httpbin.org
+2025-10-02 16:57:48,734 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:48,765 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:48,795 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:48,926 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:48,957 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:48,988 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,119 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,149 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,180 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,311 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,342 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,372 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,503 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,534 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,564 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,695 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,726 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,757 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,888 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,919 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:49,949 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,080 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,111 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,141 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,272 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,303 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,333 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,464 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,495 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,526 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: logic_bombs in https://httpbin.org
+2025-10-02 16:57:50,657 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:50,687 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:50,818 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:50,849 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:50,980 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,010 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,141 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,172 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,303 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,333 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,464 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,495 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,626 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,657 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,788 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,819 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,950 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:51,980 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:52,111 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:52,142 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: race_conditions in https://httpbin.org
+2025-10-02 16:57:52,273 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,304 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,334 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,465 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,496 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,526 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,657 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,688 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,719 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,850 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,880 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:52,911 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: deserialization_bombs in https://httpbin.org
+2025-10-02 16:57:53,042 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: prototype_pollution in https://httpbin.org
+2025-10-02 16:57:53,072 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: prototype_pollution in https://httpbin.org
+2025-10-02 16:57:53,203 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: prototype_pollution in https://httpbin.org
+2025-10-02 16:57:53,234 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: prototype_pollution in https://httpbin.org
+2025-10-02 16:57:53,365 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: prototype_pollution in https://httpbin.org
+2025-10-02 16:57:53,395 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: prototype_pollution in https://httpbin.org
+2025-10-02 16:57:53,526 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: prototype_pollution in https://httpbin.org
+2025-10-02 16:57:53,557 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: prototype_pollution in https://httpbin.org
+2025-10-02 16:57:53,688 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:53,719 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:53,750 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:53,880 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:53,911 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:53,942 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,073 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,103 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,134 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,265 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,296 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,326 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,457 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,488 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,518 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,650 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,680 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,711 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,842 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,872 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:54,903 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:55,034 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:55,064 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:55,095 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:55,226 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:55,256 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:55,287 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: template_injection in https://httpbin.org
+2025-10-02 16:57:55,418 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: xxe_advanced in https://httpbin.org
+2025-10-02 16:57:55,448 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: xxe_advanced in https://httpbin.org
+2025-10-02 16:57:55,579 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: xxe_advanced in https://httpbin.org
+2025-10-02 16:57:55,610 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: xxe_advanced in https://httpbin.org
+2025-10-02 16:57:55,741 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: xxe_advanced in https://httpbin.org
+2025-10-02 16:57:55,772 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: xxe_advanced in https://httpbin.org
+2025-10-02 16:57:55,902 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:55,933 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:55,964 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:55,994 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,125 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,156 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,186 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,217 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,348 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,378 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,409 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,440 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,570 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,601 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,632 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,662 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,793 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,824 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,856 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:56,887 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,018 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,049 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,080 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,110 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,241 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,272 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,302 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,333 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,464 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,495 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,525 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,556 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,687 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,718 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,748 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,779 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,910 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,941 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:57,971 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:58,002 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: buffer_overflow in https://httpbin.org/
+2025-10-02 16:57:58,133 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,163 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,194 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,325 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,355 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,386 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,517 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,547 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,578 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,709 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,739 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,770 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,901 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,932 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:58,962 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,094 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,125 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,155 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,286 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,317 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,347 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,478 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,509 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,539 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,670 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,701 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,731 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,862 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,893 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:57:59,923 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: format_string in https://httpbin.org/
+2025-10-02 16:58:00,054 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,085 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,216 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,247 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,378 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,408 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,539 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,570 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,701 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,731 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,862 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:00,893 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:01,024 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:01,054 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:01,185 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:01,216 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:01,347 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:01,377 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:01,508 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/
+2025-10-02 16:58:01,539 - core.zero_day_discovery_engine - INFO - 🔬 Potential zero-day found: integer_overflow in https://httpbin.org/

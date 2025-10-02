@@ -667,6 +667,19 @@ class ThreatIntelligenceEngine:
             logger.error(f"❌ Payload intelligence generation failed: {e}")
         
         return payload_intel
+    
+    async def cleanup(self):
+        """Clean up any open resources"""
+        try:
+            # Close any open aiohttp sessions
+            if hasattr(self, '_session') and self._session:
+                await self._session.close()
+                self._session = None
+            
+            logger.debug("🧹 Threat intelligence cleanup completed")
+            
+        except Exception as e:
+            logger.debug(f"Cleanup warning: {e}")
 
 # Initialize threat intelligence engine
 threat_intelligence = ThreatIntelligenceEngine()

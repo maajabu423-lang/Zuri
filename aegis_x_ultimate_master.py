@@ -23,6 +23,8 @@ from core.ai_agent_trainer import AIAgentTrainer
 from core.elite_vulnerability_engine import EliteVulnerabilityEngine
 from core.elite_verification_engine import EliteVerificationEngine
 from core.threat_intelligence_engine import ThreatIntelligenceEngine
+from core.zero_day_discovery_engine import ZeroDayDiscoveryEngine
+from core.professional_vulnerability_arsenal import ProfessionalVulnerabilityArsenal
 
 # Configure logging
 logging.basicConfig(
@@ -47,6 +49,12 @@ class AegisXUltimateMaster:
         
         # Ultimate Payload Arsenal with 100,000+ patterns
         self.payload_arsenal = UltimatePayloadArsenal()
+        
+        # Professional Vulnerability Arsenal with comprehensive coverage
+        self.professional_arsenal = ProfessionalVulnerabilityArsenal()
+        
+        # Zero-Day Discovery Engine
+        self.zero_day_engine = ZeroDayDiscoveryEngine()
         
         # Stealth & Evasion Engine
         self.stealth_engine = StealthEvasionEngine()
@@ -194,24 +202,28 @@ class AegisXUltimateMaster:
             logger.info("⚡ PHASE 5: SMART VULNERABILITY CHAIN EXECUTION")
             await self._execute_smart_vulnerability_chains(target, time_limit)
             
-            # Phase 6: Ultimate Vulnerability Discovery (Fallback)
-            logger.info("💀 PHASE 6: ULTIMATE VULNERABILITY DISCOVERY (FALLBACK)")
+            # Phase 6: Zero-Day Discovery
+            logger.info("🔬 PHASE 6: ZERO-DAY DISCOVERY")
+            await self._zero_day_discovery(target)
+            
+            # Phase 7: Ultimate Vulnerability Discovery (Fallback)
+            logger.info("💀 PHASE 7: ULTIMATE VULNERABILITY DISCOVERY (FALLBACK)")
             await self._ultimate_vulnerability_discovery(target, time_limit)
             
-            # Phase 7: Advanced Verification
-            logger.info("🔍 PHASE 7: ADVANCED VERIFICATION")
+            # Phase 8: Advanced Verification
+            logger.info("🔍 PHASE 8: ADVANCED VERIFICATION")
             await self._advanced_verification()
             
-            # Phase 8: Stealth Analysis
-            logger.info("🥷 PHASE 8: STEALTH ANALYSIS")
+            # Phase 9: Stealth Analysis
+            logger.info("🥷 PHASE 9: STEALTH ANALYSIS")
             await self._stealth_analysis()
             
-            # Phase 9: Success Validation
-            logger.info("✅ PHASE 9: SUCCESS VALIDATION")
+            # Phase 10: Success Validation
+            logger.info("✅ PHASE 10: SUCCESS VALIDATION")
             success_results = await self._validate_success_criteria()
             
-            # Phase 10: Ultimate Reporting
-            logger.info("📋 PHASE 10: ULTIMATE REPORTING")
+            # Phase 11: Ultimate Reporting
+            logger.info("📋 PHASE 11: ULTIMATE REPORTING")
             await self._generate_ultimate_report()
             
             self.campaign_results['end_time'] = datetime.now().isoformat()
@@ -254,6 +266,27 @@ class AegisXUltimateMaster:
             self.campaign_results['error'] = str(e)
             self.campaign_results['end_time'] = datetime.now().isoformat()
             return self.campaign_results
+        
+        finally:
+            # Properly close all async resources
+            try:
+                # Close threat intelligence sessions
+                if hasattr(self, 'threat_intelligence') and self.threat_intelligence:
+                    await self.threat_intelligence.cleanup()
+                
+                # Close zero-day engine sessions
+                if hasattr(self, 'zero_day_engine') and self.zero_day_engine:
+                    # Zero-day engine cleanup if needed
+                    pass
+                
+                # Force garbage collection of any remaining sessions
+                import gc
+                gc.collect()
+                
+                logger.debug("🧹 Campaign cleanup completed")
+                
+            except Exception as cleanup_error:
+                logger.debug(f"Cleanup warning: {cleanup_error}")
     
     async def _ai_powered_reconnaissance(self, target: str):
         """AI-powered reconnaissance and training"""
@@ -278,6 +311,104 @@ class AegisXUltimateMaster:
             
         except Exception as e:
             logger.error(f"❌ AI-powered reconnaissance failed: {str(e)}")
+    
+    async def _zero_day_discovery(self, target: str):
+        """Zero-day vulnerability discovery phase"""
+        try:
+            logger.info("🔬 Starting zero-day discovery...")
+            
+            # Get target endpoints for testing
+            endpoints = [
+                target,
+                f"{target}/",
+                f"{target}/admin",
+                f"{target}/api",
+                f"{target}/login"
+            ]
+            
+            # Discover zero-day vulnerabilities
+            zero_days = await self.zero_day_engine.discover_zero_days(target, endpoints)
+            
+            # Process discovered zero-days
+            for zero_day in zero_days:
+                # Add to campaign results
+                self.campaign_results['discovered_vulnerabilities'].append({
+                    'type': zero_day['type'],
+                    'category': zero_day.get('category', 'zero_day'),
+                    'severity': zero_day.get('severity', 'critical'),
+                    'confidence': zero_day.get('confidence', 0.8),
+                    'endpoint': zero_day.get('endpoint', target),
+                    'description': zero_day.get('description', 'Zero-day vulnerability discovered'),
+                    'timestamp': zero_day.get('timestamp', datetime.now().isoformat()),
+                    'discovery_method': 'zero_day_engine',
+                    'exploit_code': self.zero_day_engine.generate_exploit_code(zero_day)
+                })
+                
+                logger.info(f"🔬 Zero-day discovered: {zero_day['type']} - {zero_day.get('severity', 'critical')}")
+            
+            # Use professional arsenal patterns for additional testing
+            critical_patterns = self.professional_arsenal.get_critical_patterns()
+            for pattern_info in critical_patterns[:20]:  # Test top 20 critical patterns
+                try:
+                    # Test pattern against target
+                    test_result = await self._test_professional_pattern(target, pattern_info)
+                    if test_result:
+                        self.campaign_results['discovered_vulnerabilities'].append(test_result)
+                        logger.info(f"🎯 Professional pattern hit: {pattern_info['category']}")
+                
+                except Exception as e:
+                    logger.debug(f"Professional pattern test failed: {e}")
+                    continue
+            
+            logger.info(f"🔬 Zero-day discovery completed: {len(zero_days)} zero-days + professional patterns tested")
+            
+        except Exception as e:
+            logger.error(f"❌ Zero-day discovery failed: {str(e)}")
+    
+    async def _test_professional_pattern(self, target: str, pattern_info: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Test a professional vulnerability pattern"""
+        try:
+            import aiohttp
+            import urllib.parse
+            
+            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=5)) as session:
+                pattern = pattern_info['pattern']
+                category = pattern_info['category']
+                severity = pattern_info['severity']
+                
+                # Test as URL parameter
+                test_url = f"{target}?test={urllib.parse.quote(pattern)}"
+                
+                try:
+                    response = await session.get(test_url)
+                    response_text = await response.text()
+                    
+                    # Check for vulnerability indicators
+                    if (response.status >= 500 or 
+                        'error' in response_text.lower() or
+                        'exception' in response_text.lower() or
+                        len(response_text) > 50000):  # Unusually large response
+                        
+                        return {
+                            'type': 'professional_pattern_match',
+                            'category': category,
+                            'severity': severity,
+                            'confidence': pattern_info.get('probability', 0.7),
+                            'endpoint': target,
+                            'pattern': pattern[:100],  # Limit pattern size
+                            'status_code': response.status,
+                            'description': f'Professional {category} pattern triggered vulnerability response',
+                            'timestamp': datetime.now().isoformat(),
+                            'discovery_method': 'professional_arsenal'
+                        }
+                
+                except Exception as e:
+                    logger.debug(f"Pattern test request failed: {e}")
+        
+        except Exception as e:
+            logger.debug(f"Professional pattern test failed: {e}")
+        
+        return None
     
     async def _execute_smart_vulnerability_chains(self, target: str, time_limit: int):
         """Execute smart vulnerability chains with prioritization"""
