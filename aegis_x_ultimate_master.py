@@ -25,6 +25,8 @@ from core.elite_verification_engine import EliteVerificationEngine
 from core.threat_intelligence_engine import ThreatIntelligenceEngine
 from core.zero_day_discovery_engine import ZeroDayDiscoveryEngine
 from core.professional_vulnerability_arsenal import ProfessionalVulnerabilityArsenal
+from core.adaptive_triple_hunt_system import AdaptiveTripleHuntSystem
+from core.advanced_reconnaissance_engine import AdvancedReconnaissanceEngine
 
 # Configure logging
 logging.basicConfig(
@@ -124,6 +126,10 @@ class AegisXUltimateMaster:
             # Initialize verification engine
             self.verification_engine = EliteVerificationEngine()
             
+            # Initialize advanced systems
+            self.triple_hunt_system = AdaptiveTripleHuntSystem()
+            self.advanced_recon = AdvancedReconnaissanceEngine()
+            
             logger.info("⚡ All engines initialized successfully")
             
         except Exception as e:
@@ -189,41 +195,45 @@ class AegisXUltimateMaster:
             logger.info("🧠 PHASE 2: SMART TARGET ANALYSIS & INTELLIGENCE GATHERING")
             await self.smart_target_analysis(target)
             
-            # Phase 3: Vulnerability Chain Planning
-            logger.info("🔗 PHASE 3: VULNERABILITY CHAIN PLANNING")
+            # Phase 3: Adaptive Triple Hunt System
+            logger.info("🚀 PHASE 3: ADAPTIVE TRIPLE HUNT SYSTEM")
+            triple_hunt_results = await self._execute_triple_hunt_system(target)
+            
+            # Phase 4: Vulnerability Chain Planning
+            logger.info("🔗 PHASE 4: VULNERABILITY CHAIN PLANNING")
             await self.build_vulnerability_chains()
             
-            # Phase 4: AI-Powered Reconnaissance & Training
+            # Phase 5: AI-Powered Reconnaissance & Training
             if ai_training:
-                logger.info("🤖 PHASE 4: AI AGENT TRAINING & RECONNAISSANCE")
+                logger.info("🤖 PHASE 5: AI AGENT TRAINING & RECONNAISSANCE")
                 await self._ai_powered_reconnaissance(target)
             
-            # Phase 5: Smart Vulnerability Chain Execution
-            logger.info("⚡ PHASE 5: SMART VULNERABILITY CHAIN EXECUTION")
+            # Phase 6: Smart Vulnerability Chain Execution
+            logger.info("⚡ PHASE 6: SMART VULNERABILITY CHAIN EXECUTION")
             await self._execute_smart_vulnerability_chains(target, time_limit)
             
-            # Phase 6: Zero-Day Discovery
-            logger.info("🔬 PHASE 6: ZERO-DAY DISCOVERY")
+            # Phase 7: Zero-Day Discovery
+            logger.info("🔬 PHASE 7: ZERO-DAY DISCOVERY")
             await self._zero_day_discovery(target)
             
-            # Phase 7: Ultimate Vulnerability Discovery (Fallback)
-            logger.info("💀 PHASE 7: ULTIMATE VULNERABILITY DISCOVERY (FALLBACK)")
+            # Phase 8: Ultimate Vulnerability Discovery (Fallback)
+            logger.info("💀 PHASE 8: ULTIMATE VULNERABILITY DISCOVERY (FALLBACK)")
             await self._ultimate_vulnerability_discovery(target, time_limit)
             
-            # Phase 8: Advanced Verification
-            logger.info("🔍 PHASE 8: ADVANCED VERIFICATION")
+            # Phase 9: Advanced Verification
+            logger.info("🔍 PHASE 9: ADVANCED VERIFICATION")
             await self._advanced_verification()
             
-            # Phase 9: Stealth Analysis
-            logger.info("🥷 PHASE 9: STEALTH ANALYSIS")
+            # Phase 10: Stealth Analysis
+            logger.info("🥷 PHASE 10: STEALTH ANALYSIS")
             await self._stealth_analysis()
             
-            # Phase 10: Success Validation
-            logger.info("✅ PHASE 10: SUCCESS VALIDATION")
+            # Phase 11: Success Validation
+            logger.info("✅ PHASE 11: SUCCESS VALIDATION")
             success_results = await self._validate_success_criteria()
             
-            # Phase 11: Ultimate Reporting
-            logger.info("📋 PHASE 11: ULTIMATE REPORTING")
+            # Phase 12: Ultimate Reporting
+            logger.info("📋 PHASE 12: ULTIMATE REPORTING")
             await self._generate_ultimate_report()
             
             self.campaign_results['end_time'] = datetime.now().isoformat()
@@ -278,6 +288,18 @@ class AegisXUltimateMaster:
                 if hasattr(self, 'zero_day_engine') and self.zero_day_engine:
                     # Zero-day engine cleanup if needed
                     pass
+                
+                # Close elite verification engine sessions
+                if hasattr(self, 'verification_engine') and self.verification_engine:
+                    await self.verification_engine.close_session()
+                
+                # Close elite vulnerability engine sessions
+                if hasattr(self, 'vulnerability_engine') and self.vulnerability_engine:
+                    await self.vulnerability_engine.close_session()
+                
+                # Close advanced reconnaissance engine sessions
+                if hasattr(self, 'advanced_recon') and self.advanced_recon:
+                    await self.advanced_recon.close_session()
                 
                 # Force garbage collection of any remaining sessions
                 import gc
@@ -906,6 +928,48 @@ Duration: {self._calculate_duration():.1f} minutes
         
         self.target_intelligence = analysis
         return analysis
+    
+    async def _execute_triple_hunt_system(self, target: str) -> Dict[str, Any]:
+        """Execute the adaptive triple hunt system"""
+        logger.info("🚀 Executing Adaptive Triple Hunt System...")
+        
+        try:
+            # Execute comprehensive triple hunt campaign
+            campaign_results = await self.triple_hunt_system.execute_triple_hunt(target)
+            
+            # Integrate results into main campaign
+            if 'phases' in campaign_results:
+                for phase_name, phase_data in campaign_results['phases'].items():
+                    # Add discovered vulnerabilities to main results
+                    if 'effective_payloads' in phase_data:
+                        for payload in phase_data['effective_payloads']:
+                            self.campaign_results['discovered_vulnerabilities'].append({
+                                'source': f'triple_hunt_{phase_name}',
+                                'type': payload.get('type', 'unknown'),
+                                'endpoint': payload.get('endpoint', target),
+                                'payload': payload.get('payload', ''),
+                                'confidence': payload.get('confidence', 0.5),
+                                'severity': payload.get('impact', 'medium'),
+                                'timestamp': datetime.now().isoformat()
+                            })
+                    
+                    # Add discovered endpoints
+                    if 'discovered_endpoints' in phase_data:
+                        self.discovered_endpoints.extend(phase_data['discovered_endpoints'])
+            
+            # Update campaign statistics
+            total_vulns = campaign_results.get('total_vulnerabilities', 0)
+            logger.info(f"🎯 Triple Hunt System completed: {total_vulns} vulnerabilities discovered")
+            logger.info(f"📊 Campaign Risk Score: {campaign_results.get('risk_score', 0):.2f}/10")
+            
+            # Store results for reporting
+            self.campaign_results['triple_hunt_results'] = campaign_results
+            
+            return campaign_results
+            
+        except Exception as e:
+            logger.error(f"❌ Triple Hunt System failed: {e}")
+            return {"error": str(e), "total_vulnerabilities": 0}
     
     async def build_vulnerability_chains(self) -> List[Dict[str, Any]]:
         """Build intelligent vulnerability chains for maximum impact"""
